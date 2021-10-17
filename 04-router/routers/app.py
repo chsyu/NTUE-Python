@@ -1,9 +1,8 @@
 import uvicorn
 from fastapi import FastAPI
-from productJson import productList
-
 
 app = FastAPI()
+
 
 @app.get("/")
 def root():
@@ -12,7 +11,11 @@ def root():
 
 @app.get("/products")
 def products():
-    return productList
+    return {"products": {
+        "name": "book",
+                "price": 100,
+                "qty": 2
+    }}
 
 
 if __name__ == "__main__":
