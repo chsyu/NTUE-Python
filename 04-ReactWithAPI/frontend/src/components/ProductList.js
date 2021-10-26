@@ -11,25 +11,24 @@ export default function ProductList() {
 
   return (
     <>
-      {!products
-        ? (
-          <div className="spinner-wrap">
-            <Spin indicator={antIcon} className="spinner" />
-          </div>
-        ) : (
-          <Row gutter={[32, 32]}>
-            {products.map(product => (
-              <Col
-                key={product.id}
-                md={{ span: 12 }}
-                xxl={{ span: 8 }}
-              >
-                <ProductItem product={product} />
-              </Col>
-            ))}
-          </Row>
-        )
-      }
+      {!products ? (
+        <div className="spinner-wrap">
+          <Spin indicator={antIcon} className="spinner" />
+        </div>
+      ) : (
+        <Row gutter={[32, 32]}>
+          {products.map((product) => (
+            <Col
+              key={product.id}
+              sm={{ span: 12 }}
+              md={{ span: 8 }}
+              xxl={{ span: 6 }}
+            >
+              <ProductItem product={product} />
+            </Col>
+          ))}
+        </Row>
+      )}
     </>
   );
 }

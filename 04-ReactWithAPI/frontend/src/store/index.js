@@ -31,6 +31,7 @@ const initialState = {
 };
 
 function reducer(state, action) {
+  console.log(action.type)
   switch (action.type) {
     case SET_PAGE_TITLE:
       return {
