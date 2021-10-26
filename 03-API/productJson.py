@@ -1,5 +1,6 @@
-productList = [
+product_list = [
     {
+        "id": "1",
         "category": "Textile",
         "name": "Domino wool throw",
         "sku": "sku_313354",
@@ -11,6 +12,7 @@ productList = [
         "countInStock": 10
     },
     {
+        "id": "2",
         "category": "Textile",
         "name": "Pom Pom cushion 45x45 cm",
         "sku": "sku_313355",
@@ -22,6 +24,7 @@ productList = [
         "countInStock": 3
     },
     {
+        "id": "3",
         "category": "Tableware",
         "name": "Rustic mug",
         "sku": "sku_313356",
@@ -33,6 +36,7 @@ productList = [
         "countInStock": 6
     },
     {
+        "id": "4",
         "category": "Tableware",
         "name": "Essence white wine glass 4-pack",
         "sku": "sku_313358",
@@ -44,6 +48,7 @@ productList = [
         "countInStock": 3
     },
     {
+        "id": "5",
         "category": "Home Accessories",
         "name": "Triplets easter rabbit 3-pack",
         "sku": "sku_622147",
@@ -55,6 +60,7 @@ productList = [
         "countInStock": 4
     },
     {
+        "id": "6",
         "category": "Home Accessories",
         "name": "Nova pedal bin",
         "sku": "sku_622146",
@@ -66,6 +72,7 @@ productList = [
         "countInStock": 5
     },
     {
+        "id": "7",
         "category": "Lighting",
         "name": "Silvia lamp white",
         "sku": "sku_125983",
@@ -77,6 +84,7 @@ productList = [
         "countInStock": 5
     },
     {
+        "id": "8",
         "category": "Lighting",
         "name": "Luciakör candle arch",
         "sku": "sku_125982",
@@ -88,6 +96,7 @@ productList = [
         "countInStock": 8
     },
     {
+        "id": "9",
         "category": "Furniture",
         "name": "High Dot stool leather",
         "sku": "sku_559961",
@@ -99,6 +108,7 @@ productList = [
         "countInStock": 2
     },
     {
+        "id": "10",
         "category": "Furniture",
         "name": "Frame 49 sidotable with tre lådor",
         "sku": "sku_559960",
@@ -110,6 +120,7 @@ productList = [
         "countInStock": 4
     },
     {
+        "id": "11",
         "category": "Cookware",
         "name": "Satake Kuro chopper",
         "sku": "sku_119140",
@@ -121,6 +132,7 @@ productList = [
         "countInStock": 7
     },
     {
+        "id": "12",
         "category": "Cookware",
         "name": "Eva Solo knife holder",
         "sku": "sku_119139",
