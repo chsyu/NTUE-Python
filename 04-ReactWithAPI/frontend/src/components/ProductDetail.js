@@ -13,7 +13,8 @@ function ProductDetail() {
    return (
       <Row gutter={[32, 32]}>
          <Col
-            lg={{ span: 10, offset: 1 }}
+            span = {24}
+            lg = {{ span: 10, offset: 1 }}
          >
             <img
                alt=""

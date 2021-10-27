@@ -13,13 +13,15 @@ export const getProductById = async (productId) => {
 export const getProducts = async (url) => {
   const collection = jsonInfo.find(element => element.url === url);
   const collectionName = collection.name || "allProducts";
-  console.log(collectionName)
+  console.log(`getProducts API with url = ${collectionName}`)
   let data;
   // QUERY PRODUCTS
   if (collectionName === "allProducts")
     data = await axios.get(`${URL}/products`);
   else
     data = await axios.get(`${URL}/products/${collectionName}`);
+  console.log('data from API = ')
+  console.log(data);
   return data.data;
 }
 

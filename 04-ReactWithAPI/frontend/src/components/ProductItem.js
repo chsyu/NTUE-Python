@@ -10,6 +10,7 @@ export default function ProductItem({ product }) {
         <Card className="bg-gray product">
             <Link to={`/products/${product.category}/${product.id}`}
                 onClick={() => {
+                    console.log('click on product item image')
                     setProductDetail(dispatch, product.id, 1);
                 }}
             >
@@ -31,6 +32,7 @@ export default function ProductItem({ product }) {
                 <div className="product-more">
                     <Link to={`/products/${product.category}/${product.id}`} className="product-link"
                         onClick={() => {
+                            console.log("click on product item more text");                            
                             setProductDetail(dispatch, product.id, 1);
                         }}>
                         See More ...

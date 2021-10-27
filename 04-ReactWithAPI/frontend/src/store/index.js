@@ -21,7 +21,7 @@ const initialState = {
     products: [],
   },
   productDetail: {
-    product: {},
+    product: [],
     qty: 1,
   },
   navBar: {

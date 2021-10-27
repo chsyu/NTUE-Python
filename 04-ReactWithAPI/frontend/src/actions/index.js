@@ -32,25 +32,28 @@ export const removeCartItem = (dispatch, productId) => {
 };
 
 export const setProductDetail = async (dispatch, productId, qty) => {
+  console.log("SET_PRODUCT_DETAIL ACTION");
   const product = await getProductById(productId);
   if (qty === 0)
     dispatch({
       type: SET_PRODUCT_DETAIL,
       payload: {
         product,
-      }
-    })
+      },
+    });
   else
     dispatch({
       type: SET_PRODUCT_DETAIL,
       payload: {
         product,
         qty,
-      }
-    })
-}
+      },
+    });
+};
 
 export const setPage = async (dispatch, url, title) => {
+  console.log("SET_PAGE ACTION");
+
   let products = [];
   dispatch({
     type: SET_PAGE_TITLE,
@@ -69,4 +72,4 @@ export const setPage = async (dispatch, url, title) => {
   } catch (error) {
     console.log(error);
   }
-}
+};

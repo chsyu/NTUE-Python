@@ -12,11 +12,14 @@ import { setPage } from "../actions";
 const { Header, Content, Footer } = Layout;
 
 function Home() {
-  const { state: { page: { title } }, dispatch } = useContext(StoreContext);
+  const { state: { page: { products, title } }, dispatch } = useContext(StoreContext);
 
   useEffect(() => {
-    const url = window.location.pathname;
-    setPage(dispatch, url, getTitle(url))
+    if( products.length == 0 )
+    {
+      const url = window.location.pathname;
+      setPage(dispatch, url, getTitle(url))
+    }
   }, []);// eslint-disable-line react-hooks/exhaustive-deps
   return (
     <Layout className="container main-layout">
