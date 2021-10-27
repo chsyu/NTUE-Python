@@ -15,7 +15,6 @@ function Product({ match }) {
    useEffect(() => {
       if(products.length == 0)
       {
-         console.log('call setProductDetail from Product Page useEffect')
          setProductDetail(dispatch, match.params.productId, 0)
       }
    }, [])// eslint-disable-line react-hooks/exhaustive-deps
