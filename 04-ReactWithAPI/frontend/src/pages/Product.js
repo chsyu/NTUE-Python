@@ -13,7 +13,7 @@ const { Header, Content, Footer } = Layout;
 function Product({ match }) {
    const { dispatch, state: {page: {products}} } = useContext(StoreContext);
    useEffect(() => {
-      if(products.length == 0)
+      if(products.length === 0)
       {
          setProductDetail(dispatch, match.params.productId, 0)
       }
