@@ -12,13 +12,14 @@ app = FastAPI(
 )
 app.include_router(product.router)
 
+
 @app.get("/")
 async def root():
     return {"title": 'HELLO'}
 
 
 if __name__ == "__main__":
-   uvicorn.run("app:app", port= 5000, reload=True)
+   uvicorn.run("app:app", port=5000, reload=True)
 
 
 origins = [
@@ -32,4 +33,3 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=['*']
 )
-

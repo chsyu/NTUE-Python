@@ -32,6 +32,7 @@ export const removeCartItem = (dispatch, productId) => {
 };
 
 export const setProductDetail = async (dispatch, productId, qty) => {
+  console.log("SET_PRODUCT_DETAIL ACTION");
   const product = await getProductById(productId);
   if (qty === 0)
     dispatch({
@@ -51,6 +52,7 @@ export const setProductDetail = async (dispatch, productId, qty) => {
 };
 
 export const setPage = async (dispatch, url, title) => {
+  console.log("SET_PAGE ACTION");
 
   let products = [];
   dispatch({

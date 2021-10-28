@@ -15,7 +15,7 @@ function Home() {
   const { state: { page: { products, title } }, dispatch } = useContext(StoreContext);
 
   useEffect(() => {
-    if( products.length === 0 )
+    if( products.length == 0 )
     {
       const url = window.location.pathname;
       setPage(dispatch, url, getTitle(url))
