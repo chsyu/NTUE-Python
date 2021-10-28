@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from router import product
+from fastapi.responses import FileResponse
 
 
 app = FastAPI(
@@ -13,12 +14,22 @@ app = FastAPI(
 )
 app.include_router(product.router)
 
-# @app.get("/")
-# async def root():
-#     return {"title": 'HELLO'}
 
+@app.get("/{path1}")
+async def capture_routes():
+    return FileResponse('build/index.html')
 
-app.mount("/", StaticFiles(directory="build", html=True), name="build")
+@app.get("/{path1}/{path2}")
+async def capture_routes():
+    return FileResponse('build/index.html')
+
+@app.get("/{path1}/{path2}/{path3}")
+async def capture_routes():
+    return FileResponse('build/index.html')
+
+    
+app.mount("/",
+          StaticFiles(directory="build", html=True), name="build")
 
 
 if __name__ == "__main__":
@@ -26,7 +37,8 @@ if __name__ == "__main__":
 
 
 origins = [
-    'http://localhost:3000'
+    'http://localhost:3000',
+    "*"
 ]
 
 app.add_middleware(
