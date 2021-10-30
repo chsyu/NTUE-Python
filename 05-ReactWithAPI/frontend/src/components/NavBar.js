@@ -31,9 +31,6 @@ export default function NavBar() {
                 <NavItem to="/furniture" className="nav-item" activeClassName="nav-item--active">
                     Furniture
                 </NavItem>
-                <NavItem to="/admin/feed-products" className="nav-item" activeClassName="nav-item--active">
-                    JSON Feeder
-                </NavItem>
             </div>
             <Drawer
                 title=" "
