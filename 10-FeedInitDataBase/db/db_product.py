@@ -7,22 +7,21 @@ from db.models import DbProduct
 
 
 async def db_feed(db: Session):
-  for product in products:
-    new_product = DbProduct(
-        category=product["category"],
-        name=product["name"],
-        sku=product["sku"],
-        price=product["price"],
-        image=product["image"],
-        description=product["description"],
-        description_long=product["description_long"],
-        currency=product["currency"],
-        countInStock=product["countInStock"]
-    )
-
-    db.add(new_product)
-    db.commit()
-    db.refresh(new_product)
+  new_product_list = [DbProduct(
+      category=product["category"],
+      name=product["name"],
+      sku=product["sku"],
+      price=product["price"],
+      image=product["image"],
+      description=product["description"],
+      description_long=product["description_long"],
+      currency=product["currency"],
+      countInStock=product["countInStock"]
+  ) for product in products]
+  db.query(DbProduct).delete()
+  db.commit()
+  db.add_all(new_product_list)
+  db.commit()
   return db.query(DbProduct).all()
 
 async def create(db: Session, request: ProductBase):
