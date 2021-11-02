@@ -6,3 +6,9 @@ export const getTitle = url => {
    );
    return json.title;
  }
+
+
+export const getAPIPath = url => {
+  const collection = jsonInfo.find((element) => element.url === url);
+  return collection.name || "allProducts";
+}

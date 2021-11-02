@@ -12,8 +12,8 @@ app = FastAPI(
     version="0.0.1",
     terms_of_service="http://localhost:5000",
 )
-app.include_router(product.router)
 
+app.include_router(product.router)
 
 @app.get("/{path1}")
 async def capture_routes():
@@ -28,8 +28,7 @@ async def capture_routes():
     return FileResponse('build/index.html')
 
     
-app.mount("/",
-          StaticFiles(directory="build", html=True), name="build")
+app.mount("/", StaticFiles(directory="build", html=True), name="build")
 
 
 if __name__ == "__main__":
