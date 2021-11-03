@@ -21,15 +21,16 @@ async def create(db: Session, request: ProductBase):
     db.refresh(new_product)
     return new_product
 
-async def get_all(db: Session):
+
+def get_all(db: Session):
     return db.query(DbProduct).all()
 
 
-async def get_product_by_id(id:int, db: Session):
+def get_product_by_id(id:int, db: Session):
     return db.query(DbProduct).filter(DbProduct.id == id).first()
 
 
-async def get_product_by_category(
+def get_product_by_category(
   category:str, 
   db: Session):
     return db.query(DbProduct).filter(DbProduct.category == category).all()

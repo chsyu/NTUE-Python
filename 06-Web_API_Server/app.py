@@ -15,16 +15,19 @@ app = FastAPI(
 
 app.include_router(product.router)
 
+
 @app.get("/{path1}")
-async def capture_routes():
+def capture_routes():
     return FileResponse('build/index.html')
+
 
 @app.get("/{path1}/{path2}")
-async def capture_routes():
+def capture_routes():
     return FileResponse('build/index.html')
 
+
 @app.get("/{path1}/{path2}/{path3}")
-async def capture_routes():
+def capture_routes():
     return FileResponse('build/index.html')
 
     
@@ -32,7 +35,7 @@ app.mount("/", StaticFiles(directory="build", html=True), name="build")
 
 
 if __name__ == "__main__":
-   uvicorn.run("app:app", port= 5000, reload=True)
+    uvicorn.run("app:app", port= 5000, reload=True)
 
 
 origins = [

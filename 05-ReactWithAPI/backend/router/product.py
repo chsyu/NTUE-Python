@@ -9,7 +9,7 @@ router = APIRouter(
 
 @router.get('/all')
 def get_all_products():
-  # return products
+    # return products
     return product_list
 
 
@@ -21,8 +21,8 @@ def get_product_by_id(id):
 
 @router.get("/{category}")
 def get_product_by_category(category):
-   category_list = []
-   for product in product_list:
-	   if product['category'].upper() == category.upper():
-		   category_list.append(product)
-   return category_list
+    category_list = []
+    for product in product_list:
+        if product['category'].upper() == category.upper():
+            category_list.append(product)
+    return category_list

@@ -12,20 +12,20 @@ router = APIRouter(
 
 
 @router.post('', response_model=ProductDisplay)
-async def create(request: ProductBase, db: Session = Depends(get_db)):
-  return await db_product.create(db, request)
+def create(request: ProductBase, db: Session = Depends(get_db)):
+    return db_product.create(db, request)
 
 
 @router.get('/all', response_model=List[ProductDisplay])
-async def get_all_products(db: Session = Depends(get_db)):
-    return await db_product.get_all(db)
+def get_all_products(db: Session = Depends(get_db)):
+    return db_product.get_all(db)
 
 
 @router.get('/id/{id}', response_model=ProductDisplay)
-async def get_product_by_id(id:int, db: Session = Depends(get_db)):
-    return await db_product.get_product_by_id(id, db)
+def get_product_by_id(id: int, db: Session = Depends(get_db)):
+    return db_product.get_product_by_id(id, db)
 
 
 @router.get("/{category}", response_model=List[ProductDisplay])
-async def get_product_by_category(category:str, db: Session = Depends(get_db)):
-    return await db_product.get_product_by_category(category, db)
+def get_product_by_category(category: str, db: Session = Depends(get_db)):
+    return db_product.get_product_by_category(category, db)
