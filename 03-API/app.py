@@ -15,9 +15,9 @@ def get_all_products():
     return product_list
 
 
-@app.get("/products/id/{id}")
-def get_product_by_id(id):
-    return next((product for product in product_list if product['id'] == id), None)
+@app.get('/id/{product_id}')
+def get_product_by_id(product_id):
+    return next((product for product in product_list if product['id'] == product_id), None)
 
 
 @app.get("/products/{category}")

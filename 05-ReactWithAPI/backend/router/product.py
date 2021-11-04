@@ -13,10 +13,10 @@ def get_all_products():
     return product_list
 
 
-@router.get('/id/{id}')
-def get_product_by_id(id):
+@router.get('/id/{product_id}')
+def get_product_by_id(product_id):
     return next(
-        (product for product in product_list if product['id'] == id), None)
+        (product for product in product_list if product['id'] == product_id), None)
 
 
 @router.get("/{category}")

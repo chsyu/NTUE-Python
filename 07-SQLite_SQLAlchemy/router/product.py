@@ -21,11 +21,11 @@ def get_all_products(db: Session = Depends(get_db)):
     return db_product.get_all(db)
 
 
-@router.get('/id/{id}', response_model=ProductDisplay)
-def get_product_by_id(id:int, db: Session = Depends(get_db)):
-    return db_product.get_product_by_id(id, db)
+@router.get('/id/{product_id}', response_model=ProductDisplay)
+def get_product_by_id(product_id: int, db: Session = Depends(get_db)):
+    return db_product.get_product_by_id(product_id, db)
 
 
 @router.get("/{category}", response_model=List[ProductDisplay])
-async def get_product_by_category(category:str, db: Session = Depends(get_db)):
+async def get_product_by_category(category: str, db: Session = Depends(get_db)):
     return await db_product.get_product_by_category(category, db)
