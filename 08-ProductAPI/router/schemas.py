@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class ProductBase(BaseModel):
+class ProductRequest(BaseModel):
     category: str
     name: str
     sku: str
@@ -13,7 +13,7 @@ class ProductBase(BaseModel):
     countInStock: int
 
 
-class ProductDisplay(BaseModel):
+class ProductResponse(BaseModel):
     id: int
     category: str
     name: str

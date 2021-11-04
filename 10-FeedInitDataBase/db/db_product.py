@@ -1,5 +1,5 @@
 from fastapi import HTTPException, status
-from router.schemas import ProductBase
+from router.schemas import ProductRequest
 from sqlalchemy.orm.session import Session
 from .products_feed import products
 
@@ -25,7 +25,7 @@ def db_feed(db: Session):
     return db.query(DbProduct).all()
 
 
-def create(db: Session, request: ProductBase):
+def create(db: Session, request: ProductRequest):
     new_product = DbProduct(
         category=request.category,
         name=request.name,

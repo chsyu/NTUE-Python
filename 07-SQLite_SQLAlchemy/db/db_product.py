@@ -1,9 +1,9 @@
-from router.schemas import ProductBase
+from router.schemas import ProductRequest
 from sqlalchemy.orm.session import Session
 from db.models import DbProduct
 
 
-async def create(db: Session, request: ProductBase):
+def create(db: Session, request: ProductRequest):
     new_product = DbProduct(
         category=request.category,
         name=request.name,
@@ -15,7 +15,6 @@ async def create(db: Session, request: ProductBase):
         currency=request.currency,
         countInStock=request.countInStock
     )
-    print(new_product)
     db.add(new_product)
     db.commit()
     db.refresh(new_product)
@@ -30,5 +29,5 @@ def get_product_by_id(product_id: int, db: Session):
     return db.query(DbProduct).filter(DbProduct.id == product_id).first()
 
 
-def get_product_by_category( category: str,  db: Session):
+def get_product_by_category(category: str, db: Session):
     return db.query(DbProduct).filter(DbProduct.category == category).all()
