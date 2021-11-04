@@ -1,10 +1,10 @@
 from fastapi import HTTPException, status
-from router.schemas import ProductRequest
+from router.schemas import ProductRequestSchema
 from sqlalchemy.orm.session import Session
 from db.models import DbProduct
 
 
-def create(db: Session, request: ProductRequest):
+def create(db: Session, request: ProductRequestSchema):
     new_product = DbProduct(
         category=request.category,
         name=request.name,
