@@ -27,8 +27,8 @@ def get_all(db: Session):
     return db.query(DbProduct).all()
 
 
-def get_product_by_id(id: int, db: Session):
-    product = db.query(DbProduct).filter(DbProduct.id == id).first()
+def get_product_by_id(product_id: int, db: Session):
+    product = db.query(DbProduct).filter(DbProduct.id == product_id).first()
     if not product:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail=f'Product with id = {id} not found')

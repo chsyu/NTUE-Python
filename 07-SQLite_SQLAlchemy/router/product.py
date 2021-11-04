@@ -27,5 +27,5 @@ def get_product_by_id(product_id: int, db: Session = Depends(get_db)):
 
 
 @router.get("/{category}", response_model=List[ProductDisplay])
-async def get_product_by_category(category: str, db: Session = Depends(get_db)):
-    return await db_product.get_product_by_category(category, db)
+def get_product_by_category(category: str, db: Session = Depends(get_db)):
+    return db_product.get_product_by_category(category, db)
