@@ -1,24 +1,5 @@
-from router.schemas import ProductRequestSchema
 from sqlalchemy.orm.session import Session
 from db.models import DbProduct
-
-
-def create(db: Session, request: ProductRequestSchema):
-    new_product = DbProduct(
-        category=request.category,
-        name=request.name,
-        sku=request.sku,
-        price=request.price,
-        image=request.image,
-        description=request.description,
-        description_long=request.description_long,
-        currency=request.currency,
-        countInStock=request.countInStock
-    )
-    db.add(new_product)
-    db.commit()
-    db.refresh(new_product)
-    return new_product
 
 
 def get_all(db: Session):
