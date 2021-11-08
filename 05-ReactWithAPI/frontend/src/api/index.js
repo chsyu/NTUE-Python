@@ -1,5 +1,5 @@
 import axios from "axios"
-import getAPIPath from "../utils"
+import { getAPIPath } from "../utils"
 
 const URL = "http://localhost:5000/api/v1"
 
