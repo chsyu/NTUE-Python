@@ -35,20 +35,33 @@ class SignInRequestSchema(BaseModel):
 
 
 class UserRequestSchema(UserBase):
-    password1: str
-    password2: str
+    password: str
 
-    @validator('password2')
-    def passwords_match(cls, v, values, **kwargs):
-        if 'password1' in values and v != values['password1']:
-            raise ValueError('passwords do not match')
-        return v
-
-    @validator("password1")
+    @classmethod
+    @validator("password")
     def password_must_have_6_digits(cls, v):
         if len(v) < 6:
             raise ValueError("Password must have at least 6 digits")
         return v
+
+
+# class UserRequestSchema(UserBase):
+#     password1: str
+#     password2: str
+#
+#     @classmethod
+#     @validator('password2')
+#     def passwords_match(cls, v, values, **kwargs):
+#         if 'password1' in values and v != values['password1']:
+#             raise ValueError('passwords do not match')
+#         return v
+#
+#     @classmethod
+#     @validator("password1")
+#     def password_must_have_6_digits(cls, v):
+#         if len(v) < 6:
+#             raise ValueError("Password must have at least 6 digits")
+#         return v
 
 
 class UserResponseSchema(UserBase):

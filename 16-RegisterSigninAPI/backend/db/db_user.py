@@ -11,7 +11,7 @@ def register(db: Session, request: UserRequestSchema) -> DbUser:
     new_user = DbUser(
         username=request.username,
         email=request.email,
-        password=bcrypt(request.password1),
+        password=bcrypt(request.password),
         is_admin=request.is_admin,
     )
     try:
