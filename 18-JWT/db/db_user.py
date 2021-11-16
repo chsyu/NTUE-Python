@@ -46,6 +46,7 @@ def signin(db: Session, request: SignInRequestSchema):
 
 def update_profile(db: Session, request: SignInRequestSchema) -> DbUser:
     user = db.query(DbUser).filter(func.upper(DbUser.username) == request.username.upper()).first()
+    pass
 
 
 def get_all_users(db: Session) -> list[DbUser]:
@@ -76,5 +77,5 @@ def get_user_by_username(user_name: str, db: Session) -> DbUser:
     user = db.query(DbUser).filter(func.upper(DbUser.username) == user_name.upper()).first()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'User with email = {user_name} not found')
+                            detail=f'User with user name = {user_name} not found')
     return user
