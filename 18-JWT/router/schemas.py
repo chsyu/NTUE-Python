@@ -34,6 +34,12 @@ class SignInRequestSchema(BaseModel):
     password: str
 
 
+class UpdateProfileRequestSchema(SignInRequestSchema):
+    username: str
+    address: str
+    tel: str
+
+
 class UserRequestSchema(UserBase):
     password: str
 
@@ -89,6 +95,8 @@ class ProductResponseWithUserSchema(ProductRequestSchema):
 
 class UserResponseWithProductsSchema(UserBase):
     id: int
+    tel: str = ""
+    address: str = ""
     created_products: List[ProductResponseSchema] = []
 
     class Config:

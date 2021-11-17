@@ -4,7 +4,7 @@ from sqlalchemy.orm.session import Session
 from sqlalchemy import func, exc
 from sqlalchemy.exc import IntegrityError
 from router.schemas import UserRequestSchema, SignInRequestSchema
-from db.models import DbUser
+from db.models import DbUser, DbUserDetail
 from utils.hash import bcrypt, verify
 from utils.oauth2 import create_access_token
 
@@ -20,7 +20,13 @@ def register(db: Session, request: UserRequestSchema) -> DbUser:
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
-        return new_user
+        access_token = create_access_token(data={'username': new_user.username})
+
+        return {
+            'access_token': access_token,
+            'user_id': new_user.id,
+            'username': new_user.username
+        }
     except IntegrityError as exc:
         db.rollback()
         raise HTTPException(status_code=400, detail=f"{exc}".split('\n')[0])
@@ -44,9 +50,35 @@ def signin(db: Session, request: SignInRequestSchema):
     }
 
 
-def update_profile(db: Session, request: SignInRequestSchema) -> DbUser:
-    user = db.query(DbUser).filter(func.upper(DbUser.username) == request.username.upper()).first()
-    pass
+def update(user_id: int, db: Session, request: SignInRequestSchema) -> DbUser:
+    user = db.query(DbUser).filter(DbUser.id == user_id)
+    user.update({
+        DbUser.username: request.username,
+        DbUser.email: request.email,
+        DbUser.password: bcrypt(request.password)
+    })
+    db.commit()
+    try:
+        user_detail = db.query(DbUserDetail).filter(DbUserDetail.owner_id == user_id)
+        user_detail.update({
+            DbUserDetail.address: request.address,
+            DbUserDetail.tel: request.tel
+        })
+    except:
+        new_user_detail = DbUserDetail(
+            address=request.address,
+            tel=request.tel,
+            owner_id=user_id,
+        )
+        db.add(new_user_detail)
+    finally:
+        db.commit()
+    access_token = create_access_token(data={'username': request.username})
+    return {
+        'access_token': access_token,
+        'user_id': user_id,
+        'username': request.username
+    }
 
 
 def get_all_users(db: Session) -> list[DbUser]:

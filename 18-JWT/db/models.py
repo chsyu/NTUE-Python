@@ -20,6 +20,15 @@ class DbProduct(Base):
     owner = relationship('DbUser', back_populates='created_products')
 
 
+class DbUserDetail(Base):
+    __tablename__ = 'user_detail'
+    id = Column(Integer, primary_key=True, index=True)
+    address = Column(String(255), nullable=True)
+    tel = Column(String(30), nullable=True)
+    owner_id = Column(Integer, ForeignKey('user.id'))
+    owner_info = relationship('DbUser', back_populates='user_detail')
+
+
 class DbUser(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True, index=True)
@@ -28,6 +37,9 @@ class DbUser(Base):
     password = Column(String(255), nullable=False)
     is_admin = Column(Boolean, default=False, nullable=True)
     created_products = relationship('DbProduct', back_populates='owner')
+    user_detail = relationship('DbUserDetail', back_populates='owner_info', uselist=False)
+
+
 
 
 
