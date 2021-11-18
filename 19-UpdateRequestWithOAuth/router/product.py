@@ -12,7 +12,7 @@ router = APIRouter(
 
 
 @router.post('', response_model=ProductResponseSchema)
-def create(request: ProductRequestSchema, db: Session = Depends(get_db)):
+def create_product(request: ProductRequestSchema, db: Session = Depends(get_db)):
     return db_product.create(db=db, request=request)
 
 

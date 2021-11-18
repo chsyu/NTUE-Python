@@ -8,6 +8,7 @@ from utils.hash import verify
 from utils.oauth2 import create_access_token
 
 router = APIRouter(
+    prefix='/api/v1',
     tags=['authentication']
 )
 
