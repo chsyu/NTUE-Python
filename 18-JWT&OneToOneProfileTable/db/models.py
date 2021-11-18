@@ -37,7 +37,7 @@ class DbUser(Base):
     password = Column(String(255), nullable=False)
     is_admin = Column(Boolean, default=False, nullable=True)
     created_products = relationship('DbProduct', back_populates='owner')
-    user_detail = relationship('DbUserDetail', back_populates="owner_info")
+    user_detail = relationship('DbUserDetail', back_populates="owner_info", uselist=False)
 
 
 

@@ -59,8 +59,8 @@ def update(user_id: int, db: Session, request: UpdateProfileRequestSchema):
         DbUser.password: bcrypt(request.password)
     })
 
-    user_detail = db.query(DbUserDetail).filter(DbUserDetail.owner_id == user_id).one_or_none()
-    if user_detail is None:
+    user_detail = db.query(DbUserDetail).filter(DbUserDetail.owner_id == user_id).first()
+    if not user_detail:
         user_detail = DbUserDetail(
             address=request.address,
             tel=request.tel,
@@ -68,7 +68,7 @@ def update(user_id: int, db: Session, request: UpdateProfileRequestSchema):
         )
         db.add(user_detail)
     else:
-        user_detail = db.query(DbUserDetail).filter(DbUserDetail.owner_id == user_id)
+        # user_detail = db.query(DbUserDetail).filter(DbUserDetail.owner_id == user_id)
         user_detail.update({
             DbUserDetail.address: request.address,
             DbUserDetail.tel: request.tel

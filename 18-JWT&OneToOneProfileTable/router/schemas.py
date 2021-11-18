@@ -1,5 +1,5 @@
-from pydantic import BaseModel, validator, EmailStr
-from typing import List
+from pydantic import BaseModel, Field, validator, EmailStr
+from typing import List, Optional
 
 
 class ProductRequestSchema(BaseModel):
@@ -94,10 +94,10 @@ class ProductResponseWithUserSchema(ProductRequestSchema):
 
 
 class UserDetailResponseSchema(BaseModel):
-    id: int = None
-    address: str = None
-    tel: str = None
-    owner_id: int = None
+    id: int
+    address: str
+    tel: str
+    owner_id: int
 
     class Config:
         orm_mode = True
@@ -105,8 +105,8 @@ class UserDetailResponseSchema(BaseModel):
 
 class UserResponseWithProductsSchema(UserBase):
     id: int
-    user_detail: UserDetailResponseSchema
-    created_products: List[ProductResponseSchema] = []
+    user_detail: UserDetailResponseSchema = None
+    created_products: List[ProductResponseSchema]
 
     class Config:
         orm_mode = True
