@@ -2,10 +2,10 @@ version: "3"
 
 services:
 
-  web:
-    build: .
+  api:
+    build: ./backend/.
     # command: bash -c "uvicorn app:app --host 0.0.0.0 --port 5000 --reload"
-    command: bash -c "python3 app.py --host 0.0.0.0"
+    command: bash -c "python3 backend/app.py --host 0.0.0.0"
     volumes:
       - .:/code
     ports:
@@ -34,6 +34,18 @@ services:
     networks:
       - local-net
 
+
+  adminer:
+      image: adminer:latest
+      restart: unless-stopped
+      ports:
+        - 8000:8080
+      depends_on:
+        - db
+      environment:
+        ADMINER_DEFAULT_SERVER: db
+      networks:
+        - local-net
 
 volumes:
   mysql-db:
