@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+
+  api:
+    build: ./backend/.
+
+    command: bash -c "python3 backend/app.py --host 0.0.0.0"
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+    networks:
+      - mysql-db
+      - api
+
+  react:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend:/app
+    networks:
+      - react
+      - api
+
+  db:
+    hostname: db
+    container_name: db
+    build: ./mysql
+    restart: always
+    tty: true
+    environment:
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-db:/var/lib/mysql 
+    networks:
+      - mysql-db
+
+  nginx_react:
+    image: nginx:stable-alpine
+    ports:
+      - 8000:80
+    depends_on:
+      - react
+    volumes:
+      - ./nginx_react/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./var/log/nginx_react:/var/log/nginx
+    networks:
+      - react
+
+  nginx_api:
+    image: nginx:stable-alpine
+    ports:
+      - 5001:80
+    depends_on:
+      - api
+    volumes:
+      - ./nginx_api/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./var/log/nginx_api:/var/log/nginx
+    networks:
+      - api
+
+volumes:
+  mysql-db:
+
+
+networks:
+  mysql-db:
+  api:
+  react:

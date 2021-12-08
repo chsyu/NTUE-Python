@@ -1,0 +1,13 @@
+sqlalchemy
+uvicorn
+fastapi
+pydantic
+alembic
+python-dotenv
+pyface
+pymysql
+email-validator
+bcrypt
+passlib
+python-jose
+python-multipart
