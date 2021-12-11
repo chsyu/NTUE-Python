@@ -7,6 +7,6 @@ RUN pip install -r requirements.txt && \
     alembic upgrade head
 
 
-EXPOSE 5000
-CMD [ "python3", "app.py"]
+# EXPOSE 5000
+# CMD [ "python3", "app.py", "-h", "0.0.0.0" ]
 
