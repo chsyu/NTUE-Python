@@ -4,7 +4,7 @@ services:
 
   api:
     build: ./backend/.
-
+    image: "chsyu/shopping_cart_api:1.0"
     command: bash -c "python3 backend/app.py --host 0.0.0.0"
     volumes:
       - .:/code
@@ -15,9 +15,8 @@ services:
       - react
 
   react:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    build: ./frontend/.
+    image: "chsyu/shopping_cart_react:1.0"
     volumes:
       - ./frontend:/app
     networks:
@@ -27,6 +26,7 @@ services:
     hostname: db
     container_name: db
     build: ./mysql
+    image: "chsyu/shopping_cart_mysql:1.0"
     restart: always
     tty: true
     environment:
