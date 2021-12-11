@@ -5,6 +5,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    container_name: frontend
     ports:
       - "3000:3000"
     volumes:
@@ -14,4 +15,4 @@ services:
 
 networks:
   client-net:
-    driver: bridge
+

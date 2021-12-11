@@ -4,10 +4,16 @@ services:
 
   api:
     build: ./backend/.
-    # command: bash -c "uvicorn app:app --host 0.0.0.0 --port 5000 --reload"
-    command: bash -c "python3 backend/app.py --host 0.0.0.0"
+    command: python3 backend/app.py
     volumes:
       - .:/code
+    container_name: api
+    environment:
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
     ports:
       - "5001:5000"
     depends_on:
@@ -21,6 +27,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    container_name: frontend
     volumes:
       - ./frontend:/app
     networks:
@@ -35,8 +42,9 @@ services:
     environment:
       MYSQL_DATABASE: sample_db
       MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
     ports:
       - "3306:3306"
     volumes:
@@ -59,8 +67,6 @@ services:
 
 volumes:
   mysql-db:
-    driver: local
 
 networks:
   local-net:
-    driver: bridge

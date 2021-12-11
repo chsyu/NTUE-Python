@@ -1,11 +1,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+import os
 
-user_name = "user"
-password = "password"
-host = "db"
-database_name = "sample_db"
+user_name = os.environ.get("MYSQL_USER")
+password = os.environ.get("MYSQL_PASSWORD")
+host = os.environ.get("MYSQL_HOST")
+database_name = os.environ.get("MYSQL_DATABASE")
 
 SQLALCHEMY_DATABASE_URL = 'mysql://%s:%s@%s/%s?charset=utf8mb4' % (
     user_name,

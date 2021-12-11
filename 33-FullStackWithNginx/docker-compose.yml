@@ -5,9 +5,17 @@ services:
   api:
     build: ./backend/.
     image: "chsyu/shopping_cart_api:1.0"
-    command: bash -c "python3 backend/app.py --host 0.0.0.0"
+    command: python3 backend/app.py
     volumes:
       - .:/code
+    container_name: api
+
+    environment:
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
     depends_on:
       - db
     networks:
@@ -17,6 +25,8 @@ services:
   react:
     build: ./frontend/.
     image: "chsyu/shopping_cart_react:1.0"
+    container_name: react
+
     volumes:
       - ./frontend:/app
     networks:
@@ -32,8 +42,9 @@ services:
     environment:
       MYSQL_DATABASE: sample_db
       MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
     ports:
       - "3306:3306"
     volumes:
@@ -43,6 +54,8 @@ services:
 
   nginx:
     image: nginx:stable-alpine
+    container_name: nginx
+
     ports:
       - 8000:80
     depends_on:
