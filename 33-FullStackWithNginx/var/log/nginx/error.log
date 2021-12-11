@@ -61,3 +61,41 @@
 2021/12/11 14:46:53 [notice] 1#1: start worker processes
 2021/12/11 14:46:53 [notice] 1#1: start worker process 23
 2021/12/11 14:46:53 [notice] 1#1: start worker process 24
+2021/12/11 14:50:19 [error] 23#23: *1 upstream timed out (110: Operation timed out) while reading response header from upstream, client: 172.29.0.1, server: , request: "GET /docs HTTP/1.1", upstream: "http://172.29.0.2:3000/docs", host: "localhost:8000"
+2021/12/11 14:50:29 [error] 24#24: *5 upstream timed out (110: Operation timed out) while reading response header from upstream, client: 172.29.0.1, server: , request: "GET / HTTP/1.1", upstream: "http://172.29.0.2:3000/", host: "localhost:8000"
+2021/12/11 14:52:22 [error] 24#24: *9 connect() failed (111: Connection refused) while connecting to upstream, client: 172.29.0.1, server: , request: "GET /api/docs HTTP/1.1", upstream: "http://172.29.0.3:5001/api/docs", host: "localhost:8000"
+2021/12/11 14:54:16 [error] 23#23: *34 connect() failed (111: Connection refused) while connecting to upstream, client: 172.29.0.1, server: , request: "GET /api/docs HTTP/1.1", upstream: "http://172.29.0.3:5001/api/docs", host: "localhost:8000"
+2021/12/11 14:54:17 [error] 23#23: *34 connect() failed (111: Connection refused) while connecting to upstream, client: 172.29.0.1, server: , request: "GET /api/docs HTTP/1.1", upstream: "http://172.29.0.3:5001/api/docs", host: "localhost:8000"
+2021/12/11 14:54:22 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2021/12/11 14:54:22 [notice] 24#24: gracefully shutting down
+2021/12/11 14:54:22 [notice] 24#24: exiting
+2021/12/11 14:54:22 [notice] 23#23: gracefully shutting down
+2021/12/11 14:54:22 [notice] 24#24: exit
+2021/12/11 14:54:22 [notice] 23#23: exiting
+2021/12/11 14:54:22 [notice] 23#23: exit
+2021/12/11 14:54:22 [notice] 1#1: signal 17 (SIGCHLD) received from 24
+2021/12/11 14:54:22 [notice] 1#1: worker process 24 exited with code 0
+2021/12/11 14:54:22 [notice] 1#1: signal 17 (SIGCHLD) received from 23
+2021/12/11 14:54:22 [notice] 1#1: worker process 23 exited with code 0
+2021/12/11 14:54:22 [notice] 1#1: exit
+2021/12/11 14:54:54 [notice] 1#1: using the "epoll" event method
+2021/12/11 14:54:54 [notice] 1#1: nginx/1.20.2
+2021/12/11 14:54:54 [notice] 1#1: built by gcc 10.3.1 20210424 (Alpine 10.3.1_git20210424) 
+2021/12/11 14:54:54 [notice] 1#1: OS: Linux 5.10.47-linuxkit
+2021/12/11 14:54:54 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2021/12/11 14:54:54 [notice] 1#1: start worker processes
+2021/12/11 14:54:54 [notice] 1#1: start worker process 23
+2021/12/11 14:54:54 [notice] 1#1: start worker process 24
+2021/12/11 14:55:36 [notice] 1#1: signal 3 (SIGQUIT) received, shutting down
+2021/12/11 14:55:36 [notice] 23#23: gracefully shutting down
+2021/12/11 14:55:36 [notice] 24#24: gracefully shutting down
+2021/12/11 14:55:36 [notice] 23#23: exiting
+2021/12/11 14:55:36 [notice] 24#24: exiting
+2021/12/11 14:55:36 [notice] 23#23: exit
+2021/12/11 14:55:36 [notice] 24#24: exit
+2021/12/11 14:55:36 [notice] 1#1: signal 17 (SIGCHLD) received from 23
+2021/12/11 14:55:36 [notice] 1#1: worker process 23 exited with code 0
+2021/12/11 14:55:36 [notice] 1#1: signal 17 (SIGCHLD) received from 24
+2021/12/11 14:55:36 [notice] 1#1: worker process 24 exited with code 0
+2021/12/11 14:55:36 [notice] 1#1: signal 29 (SIGIO) received
+2021/12/11 14:55:36 [notice] 1#1: exit
