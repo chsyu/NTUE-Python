@@ -1,7 +1,7 @@
 import axios from "axios";
 import jsonInfo from "../json/jsonInfo.json";
 
-const URL = "http://localhost:5001/api/v1";
+const URL = "http://localhost:8000/api/v1";
 
 export const getProductById = async (productId) => {
   // REFERENCE PRODUCTS COLLECTION
