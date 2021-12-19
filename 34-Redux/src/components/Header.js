@@ -1,7 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
-import { StoreContext } from "../store";
 import CartSummary from "./CartSummary";
 import UserInfo from "./UserInfo";
 import { setPage } from "../actions/productActions";

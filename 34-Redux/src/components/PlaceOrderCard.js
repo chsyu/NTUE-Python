@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { Row, Col, Button, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { createOrder, resetOrder, requestOrderDetail } from "../actions/orderActions";
+import { createOrder, resetOrder } from "../actions/orderActions";
 
 export default function PlaceOrderCard() {
   const cart = useSelector((state) => state.cart);
@@ -44,7 +44,7 @@ export default function PlaceOrderCard() {
       // requestOrderDetail(dispatch, order.id)
       history.push(`/order/${order.id}`);
     }
-  }, [success]);
+  }, [success]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>

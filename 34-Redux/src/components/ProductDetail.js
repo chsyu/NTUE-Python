@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Row, Col } from "antd";
 import { Select } from 'antd';
 import AddToCart from "./AddToCart"
-import { setProductDetail } from "../actions";
+import { setProductDetail } from "../actions/productActions";
 
 const { Option } = Select;
 
@@ -48,7 +48,7 @@ function ProductDetail() {
                         defaultValue={qty}
                         value={qty}
                         className="select-style"
-                        onChange={val => setProductDetail(dispatch, product.id, val, product.category)}
+                        onChange={val => dispatch(setProductDetail(product.id, val, product.category))}
                      >
                         {[...Array(product.countInStock).keys()].map((x) => (
                            <Option key={x + 1} value={x + 1}>

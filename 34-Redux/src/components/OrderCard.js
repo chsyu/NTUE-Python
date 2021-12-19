@@ -49,7 +49,7 @@ export default function OrderCard({ orderId }) {
 
   useEffect(() => {
     dispatch(requestOrderDetail(orderId));
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <>
