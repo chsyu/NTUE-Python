@@ -1,4 +1,4 @@
-.DS_Store
-/node_moduels
+node_moduels/
 *.log
 .eslintcache
+.DS_Store
