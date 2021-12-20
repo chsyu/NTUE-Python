@@ -7,7 +7,7 @@ from db.database import engine
 
 
 app = FastAPI(
-    title="Shopping Cart API",
+    title="Shopping Cart API from docker compose",
     description="This API was developed for teaching Fast API",
     version="0.0.1",
     terms_of_service="http://localhost:5000",
