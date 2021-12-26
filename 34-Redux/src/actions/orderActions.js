@@ -14,12 +14,17 @@ import {
   getOrderById,
 } from "../api";
 
-export const saveShippingAddress = (shippingAddress) => (dispatch) => {
+export const saveShippingAddress = (shippingAddress) => (dispatch, getState) => {
   dispatch({
     type: SAVE_SHIPPING_ADDRESS,
     payload: shippingAddress,
   });
-  localStorage.setItem("shippingAddress", JSON.stringify(shippingAddress));
+  localStorage.setItem(
+    "shippingAddress",
+    JSON.stringify(getState().cart.shippingAddress)
+  );
+
+  // localStorage.setItem("shippingAddress", JSON.stringify(shippingAddress));
 };
 
 export const savePaymentMethod = (paymentMethod) => (dispatch) => {
@@ -29,8 +34,9 @@ export const savePaymentMethod = (paymentMethod) => (dispatch) => {
   });
 };
 
-export const createOrder = (cart, userInfo) => async (dispatch) => {
+export const createOrder = (cart, userInfo) => async (dispatch, getState) => {
   dispatch({ type: BEGIN_ORDER_CREATE });
+  // const { userInfo } = getState().userSignin;
   try {
     const item = {
       orderItems: cart.cartItems,
