@@ -9,5 +9,7 @@ services:
     ports:
       - 5001:5000
     volumes:
-      - .:/code
+      - .:/code/shopping-cart.db
+
+      
 
