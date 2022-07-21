@@ -1,0 +1,77 @@
+version: "3.8"
+
+services:
+
+  api:
+    build: ./backend/.
+    image: "chsyu/shopping_cart_api:1.0"
+    command: python3 backend/app.py
+    volumes:
+      - .:/code
+    container_name: api
+
+    environment:
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
+    depends_on:
+      - db
+    networks:
+      - mysql-db
+      - react
+
+  react:
+    build: ./frontend/.
+    image: "chsyu/shopping_cart_react:1.0"
+    container_name: react
+
+    volumes:
+      - ./frontend:/app
+    networks:
+      - react
+
+  db:
+    hostname: db
+    container_name: db
+    build: ./mysql
+    image: "chsyu/shopping_cart_mysql:1.0"
+    restart: always
+    tty: true
+    environment:
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-db:/var/lib/mysql 
+    networks:
+      - mysql-db
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+
+    ports:
+      - 8000:80
+    depends_on:
+      - react
+      - api
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./var/log/nginx:/var/log/nginx
+    networks:
+      - react
+
+
+volumes:
+  mysql-db:
+
+
+networks:
+  mysql-db:
+  react:
