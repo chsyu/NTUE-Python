@@ -13,34 +13,27 @@ function Home() {
   const products = useSelector(selectProducts);
   const dispatch = useDispatch();
   const { categoryName } = useParams();
-  let title = "NORDIC NEST Shopping Cart";
-  let url = "/";
-  let filterProducts = products || [];
-  if(!!categoryName) {
-    url = categoryName;
-    filterProducts = products.filter(
-      product => product.category.toUpperCase() == categoryName.toUpperCase());
-    if(!filterProducts) filterProducts = [];
-    if(filterProducts.length)
-      title = filterProducts[0].category.toUpperCase();
-  }
+  const url = categoryName || "/";
+
+  const title = url === "/"
+    ? "NORDIC NEST Shopping Cart"
+    : products[0]?.category.toUpperCase();
 
   useEffect(() => {
     dispatch(getProductsAsync(url));
-  }, [categoryName])
-
+  }, [url, dispatch])
 
   return (
     <Layout className="container main-layout">
       <Header className="layout-header">
-        <AppHeader title={title}/>
+        <AppHeader title={title} />
       </Header>
       <Content className="layout-content">
-        <ProductList products={filterProducts}/>
+        <ProductList products={products} />
       </Content>
       <Footer className="layout-footer">
-        <AppFooter/>  
-      </Footer>      
+        <AppFooter />
+      </Footer>
     </Layout>
   );
 }

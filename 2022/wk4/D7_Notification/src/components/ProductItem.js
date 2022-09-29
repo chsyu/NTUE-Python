@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 export default function ProductItem({ product }) {
     return (
         <Card className="bg-gray product">
-            <Link to={`/product/${product.id}`}>
+            <Link to={`/products/id/${product.id}`}>
                 <img
                     style={{ width: '100%' }}
                     src={product.image}
@@ -21,7 +21,7 @@ export default function ProductItem({ product }) {
                     {product.description}
                 </p>
                 <div className="product-more">
-                    <Link to={`/product/${product.id}`} className="product-link">
+                    <Link to={`/products/id/${product.id}`} className="product-link">
                         See More ...
                     </Link>
                     <span

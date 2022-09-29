@@ -18,7 +18,7 @@ function Product() {
 
    useEffect(() => {
       dispatch(getProductByIdAsync(productId));
-   }, [])
+   }, [productId, dispatch])
 
    return (
       <Layout className="container main-layout">
