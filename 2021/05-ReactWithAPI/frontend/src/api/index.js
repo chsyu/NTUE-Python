@@ -1,7 +1,7 @@
 import axios from "axios"
 import { getAPIPath } from "../utils"
 
-const URL = "http://localhost:5000/api/v1"
+const URL = "http://127.0.0.1:5000/api/v1"
 
 export const getProductById = async (productId) => {
   // REFERENCE PRODUCTS COLLECTION
