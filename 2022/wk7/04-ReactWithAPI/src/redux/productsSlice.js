@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { getProducts, getProductById } from '../api';
-import products from '../json/products.json';
 
 // Part1: Define Slice (including reducers and actions)
 
