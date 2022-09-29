@@ -29,7 +29,7 @@ export default function CartModal({ isModalVisible, toggleModal }) {
          ) : (
             cartItems.map(item => (
                <li key={item.id} className="cart-item">
-                  <Link to={`/product/${item.id}`}>
+                  <Link to={`/products/id/${item.id}`}>
                      <div className="cart-image" onClick={handleCancel}>
                         <img src={item.image} alt={item.name} />
                      </div>
