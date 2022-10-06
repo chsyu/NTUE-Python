@@ -88,6 +88,7 @@ const usersSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.usersInfo = action.payload;
+        state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -99,6 +100,7 @@ const usersSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
         state.usersInfo = action.payload;
+        state.error = null;
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
@@ -110,6 +112,7 @@ const usersSlice = createSlice({
       .addCase(update.fulfilled, (state, action) => {
         state.isLoading = false;
         state.usersInfo = action.payload;
+        state.error = null;
       })
       .addCase(update.rejected, (state, action) => {
         state.isLoading = false;

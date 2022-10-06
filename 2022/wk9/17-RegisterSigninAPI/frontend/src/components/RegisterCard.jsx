@@ -167,7 +167,7 @@ const RegisterCard = () => {
         )}
         Already have an account?{" "}
         <Link to={"/login?redirect=shipping"}>Login</Link>
-        {error === "" ? (
+        {!error ? (
           <></>
         ) : (
           <div className="login-form__error-wrap">

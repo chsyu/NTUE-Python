@@ -118,7 +118,7 @@ const LoginCard = ({ redirect }) => {
           </Button>
         )}
         Or <Link to={"/auth/register?redirect=shipping"}>register now!</Link>
-        {error === "" ? (
+        { !error ? (
           <></>
         ) : (
           <div className="login-form__error-wrap">
