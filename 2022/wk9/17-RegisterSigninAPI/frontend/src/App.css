@@ -167,12 +167,24 @@ body {
   margin-top: 4px;
 }
 
+.userInfo-outlined { 
+  font-size: 28px;
+  color: rgb(221, 221, 221); 
+}
+
 /* Cart */
 .cart-summary-text {
   color: white;
   font-size: 0.7rem;
   opacity: 0.6;
   padding-bottom: 1
+}
+
+.cart-summary-outlined {
+  width: 28px;
+  height: 28px;
+  color: rgb(221, 221, 221);   
+  background-color: '#6366F2';
 }
 
 .ant-modal-title {
@@ -243,7 +255,16 @@ body {
   }
 
   .header-right {
-    width: 5rem;
+    width: 4rem;
+  }
+
+  .userInfo-outlined { 
+    font-size: 22px;
+  }
+
+  .cart-summary-outlined { 
+    width: 22px;
+    height: 22px;
   }
 
 } 
