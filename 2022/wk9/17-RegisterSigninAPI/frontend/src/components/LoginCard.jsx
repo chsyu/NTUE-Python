@@ -28,13 +28,11 @@ const LoginCard = ({ redirect }) => {
     } catch (e) {
       console.log(e)
     }
-
   };
 
   const onChange = (e) => {
     dispatch(remember(e.target.checked));
   };
-
 
   useEffect(() => {
     if (userInfo) navigate(redirect);
@@ -117,7 +115,7 @@ const LoginCard = ({ redirect }) => {
             Log in
           </Button>
         )}
-        Or <Link to={"/auth/register?redirect=shipping"}>register now!</Link>
+        Or <Link to={`/auth/register?redirect=${redirect}`}>register now!</Link>
         { !error ? (
           <></>
         ) : (

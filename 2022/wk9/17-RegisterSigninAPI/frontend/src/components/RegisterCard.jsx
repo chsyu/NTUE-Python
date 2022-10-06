@@ -36,7 +36,7 @@ const tailFormItemLayout = {
   },
 };
 
-const RegisterCard = () => {
+const RegisterCard = ({ redirect }) => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const dispatch = useDispatch();
@@ -46,7 +46,7 @@ const RegisterCard = () => {
   const onFinish = async (values) => {
     console.log("Received values of form: ", values);
     const user = await dispatch(register(values));
-    user && navigate("/profile");
+    user && navigate(redirect);
   };
 
   return (
