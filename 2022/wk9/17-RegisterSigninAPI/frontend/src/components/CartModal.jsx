@@ -85,7 +85,9 @@ export default function CartModal({ isModalVisible, toggleModal }) {
             type="primary"
             onClick={checkoutHandler}
          >
-            <CartIcon size={20} />
+            <div style={{width: 20, height: 20}}>
+               <CartIcon />               
+            </div>
             <span style={{ marginLeft: 12 }}>Start Checkout</span>
          </Button>
       </Modal>
