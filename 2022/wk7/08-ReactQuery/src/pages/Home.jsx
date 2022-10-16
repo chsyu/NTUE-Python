@@ -1,17 +1,16 @@
 import { Layout } from 'antd';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query'
 import AppHeader from "../components/Header"
 import AppFooter from "../components/Footer"
 import ProductList from "../components/ProductList";
-import { getProducts } from "../api";
+import { useProducts } from '../react-query';
 const { Header, Content, Footer } = Layout;
 
 function Home() {
 
   const { categoryName } = useParams();
   const url = categoryName || "";
-  const { data, isLoading } = useQuery([url], getProducts)
+  const { data, isLoading } = useProducts(url);
   const products = data?.data || [];
   const title = url === ""
     ? "NORDIC NEST Shopping Cart"

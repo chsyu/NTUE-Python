@@ -1,17 +1,16 @@
 
 import { Layout } from 'antd';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query'
 import AppHeader from "../components/Header"
 import AppFooter from "../components/Footer"
 import ProductDetail from "../components/ProductDetail";
-import { getProductById } from "../api"
+import { useProductById } from '../react-query';
 
 const { Header, Content, Footer } = Layout;
 
 function Product() {
    const { productId } = useParams();
-   const { data, isLoading } = useQuery([productId], getProductById)
+   const { data, isLoading } = useProductById(productId);
    const product = data || {};
 
    return (

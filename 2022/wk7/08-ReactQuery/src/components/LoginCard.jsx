@@ -1,20 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { useMutation } from '@tanstack/react-query'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { WarningOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
 import { login, setUser, setError, remember } from "../redux/usersSlice";
-import { signInWithEmailPassword } from "../api";
-import { selectUserInfo, selectIsLoading, selectError, selectIsRemember } from "../redux/usersSlice";
+import { useSignInWithEmailPassword } from "../react-query";
+import { selectUserInfo, selectIsRemember } from "../redux/usersSlice";
 
 const LoginCard = ({ redirect }) => {
   const userInfo = useSelector(selectUserInfo);
   // const isLoading = useSelector(selectIsLoading);
   // const error = useSelector(selectError);
-  const { mutate, isLoading, data, error } = useMutation(signInWithEmailPassword);
+  const { mutate, isLoading, data, error } = useSignInWithEmailPassword();
   const isRemember = useSelector(selectIsRemember);
-  console.log({mutate, isLoading, data, error});
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
