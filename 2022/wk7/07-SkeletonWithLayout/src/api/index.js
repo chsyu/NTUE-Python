@@ -1,20 +1,20 @@
 import axios from "axios"
 
-const URL = "https://fastapi4railway2022-production.up.railway.app"
+const URL = "http://127.0.0.1:5000/api/v1"
 
-export const getProductById = async (productId) => {
-  // REFERENCE PRODUCTS COLLECTION
+export const getProductById = async ({ queryKey }) => {
+  const [productId] = queryKey;
   let data = await axios.get(`${URL}/products/id/${productId}`);
   return data.data;
 }
 
-export const getProducts = async (url) => {
+export const getProducts = async ({ queryKey }) => {
+  const [url] = queryKey;
   let data;
-  // QUERY PRODUCTS
-    if (url === "")
-      data = await axios.get(`${URL}/products/all`);
-    else
-      data = await axios.get(`${URL}/products/${url}`);
+  if (url === "")
+    data = await axios.get(`${URL}/products/all`);
+  else
+    data = await axios.get(`${URL}/products/${url}`);
 
   return data;
 }

@@ -1,14 +1,10 @@
 import { Row, Col, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
-import { selectIsLoading } from "../redux/productsSlice";
-
 import ProductItem from "./ProductItem";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 80, color: "#8183ff" }} spin />;
 
-export default function ProductList({ products }) {
-  const isLoading = useSelector(selectIsLoading);
+export default function ProductList({ products, isLoading }) {
 
   return (
     <>

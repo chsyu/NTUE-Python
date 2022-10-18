@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { Row, Col, Select, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
 import AddToCart from "./AddToCart"
-import { selectIsLoading } from "../redux/productsSlice";
 
 const { Option } = Select;
 const antIcon = <LoadingOutlined style={{ fontSize: 80, color: "#8183ff" }} spin />;
 
-function ProductDetail({ product }) {
+function ProductDetail({ product, isLoading }) {
    const [qty, setQty] = useState(product.countInStock > 0 ? 1 : 0);
-   const isLoading = useSelector(selectIsLoading);
 
    return (
       <>
@@ -66,7 +63,8 @@ function ProductDetail({ product }) {
                </Col>
             </Row>
          )}
-      </>);
+      </>
+   );
 }
 
 export default ProductDetail;

@@ -1,11 +1,8 @@
 import { Row, Col, Skeleton } from "antd";
-import { useSelector } from "react-redux";
-import { selectIsLoading } from "../redux/productsSlice";
-
 import ProductItem from "./ProductItem";
 
-export default function ProductList({ products }) {
-  const isLoading = useSelector(selectIsLoading);
+
+export default function ProductList({ products, isLoading }) {
 
   return (
     <Skeleton loading={isLoading}>

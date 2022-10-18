@@ -1,6 +1,7 @@
 import { Modal, Button, Select } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
 import { CartIcon } from "./Icons";
 import { addCartItems, removeCartItems } from "../redux/cartSlice";
 import { selectCartItems } from "../redux/cartSlice";
@@ -9,6 +10,7 @@ const { Option } = Select;
 export default function CartModal({ isModalVisible, toggleModal }) {
    const dispatch = useDispatch();
    const cartItems = useSelector(selectCartItems);
+   const navigate = useNavigate();
 
    const handleCancel = () => toggleModal(!isModalVisible);
    const getTotalPrice = () => {
@@ -16,6 +18,12 @@ export default function CartModal({ isModalVisible, toggleModal }) {
          cartItems.reduce((sum, item) => sum + item.price * item.qty, 0)
          : 0;
    }
+
+   const checkoutHandler = () => {
+      handleCancel();
+      navigate("/login?redirect=shipping");
+    };
+
 
    return (
       <Modal
@@ -77,8 +85,11 @@ export default function CartModal({ isModalVisible, toggleModal }) {
          <Button
             className="cart-modal-btn"
             type="primary"
+            onClick={checkoutHandler}
          >
-            <CartIcon size={20} />
+            <div style={{width: 20, height: 20}}>
+               <CartIcon />               
+            </div>
             <span style={{ marginLeft: 12 }}>Start Checkout</span>
          </Button>
       </Modal>
