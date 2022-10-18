@@ -462,6 +462,21 @@ body {
   width: 100%;
 }
 
+.login-form__success-wrap {
+  margin-top: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.7rem;
+  width: 80%;
+  border: solid 1px green;
+  border-radius: 4px;
+}
+
+.login-form__success-title {
+  color: green;
+  text-align: center;
+}
+
 .login-form__error-wrap {
   margin-top: 1rem;
   margin-left: auto;
