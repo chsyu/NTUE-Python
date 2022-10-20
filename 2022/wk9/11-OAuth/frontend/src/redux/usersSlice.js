@@ -1,15 +1,16 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-  signInWithEmailPassword,
-  registerWithEmailPassword,
-  updateProfile,
-} from "../api";
+import { createSlice } from '@reduxjs/toolkit';
+import Cookie from "js-cookie"
 
 // Define initialState 
-const initialState = { 
-  isLoading: false, 
-  userInfo: null, 
-  error: null,
+
+console.log('Cookie.userInfo = ')
+console.log(!!Cookie.get().userInfo);
+const userInfo = !Cookie.get().userInfo ? null : JSON.parse(Cookie.get().userInfo);
+console.log('userInfo = ')
+console.log(userInfo)
+
+const initialState = {
+  userInfo,
   isRemember: true,
 };
 
@@ -19,14 +20,12 @@ const usersSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.userInfo = null;
-      state.error = null;
     },
     remember: (state, action) => {
       state.isRemember = action.payload;
     },
     setUser: (state, action) => {
       state.userInfo = action.payload;
-      state.error = null;
     }
   },
 });

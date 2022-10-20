@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import { Form, Input, Checkbox, Button } from "antd";
 import { WarningOutlined } from "@ant-design/icons";
+import Cookie from "js-cookie"
+
 import { useRegisterWithEmailPassword } from "../react-query";
 
 const formItemLayout = {
@@ -48,7 +50,10 @@ const RegisterCard = ({ redirect }) => {
   };
 
   useEffect(() => {
-    if (isSuccess) navigate(redirect);
+    if (isSuccess) {
+      Cookie.set("userInfo", JSON.stringify(data.data));
+      navigate(redirect);
+    }
   }, [isSuccess, redirect]); 
 
   return (

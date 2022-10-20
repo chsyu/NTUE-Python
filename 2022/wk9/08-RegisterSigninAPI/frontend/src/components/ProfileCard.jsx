@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button } from "antd";
+import { WarningOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
+
 import { logout, selectUserInfo } from "../redux/usersSlice";
 import { useUpdateProfile } from "../react-query";
 

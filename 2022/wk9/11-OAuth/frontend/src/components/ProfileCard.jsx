@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Form, Input, Button } from "antd";
+import { WarningOutlined } from '@ant-design/icons';
+import Cookie from "js-cookie"
+
 import { logout, selectUserInfo } from "../redux/usersSlice";
 import { useUpdateProfile } from "../react-query";
 
@@ -21,9 +24,15 @@ const ProfileCard = () => {
   };
 
   const handleLogout = () => {
+    Cookie.remove("userInfo");
     dispatch(logout());
     navigate("/");
   };
+
+  useEffect(() => {
+    Cookie.set("userInfo", JSON.stringify(userInfo));
+  }, [userInfo]);
+
   return (
     <Form
       onFinish={handleUpdate}

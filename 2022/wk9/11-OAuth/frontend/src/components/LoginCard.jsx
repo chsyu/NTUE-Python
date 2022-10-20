@@ -3,13 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { Form, Input, Button, Checkbox } from 'antd';
 import { WarningOutlined, MailOutlined, LockOutlined } from '@ant-design/icons';
+import Cookie from "js-cookie"
+
 import { remember } from "../redux/usersSlice";
 import { useSignInWithEmailPassword } from "../react-query";
 import { selectIsRemember } from "../redux/usersSlice";
 
 const LoginCard = ({ redirect }) => {
 
-  const { mutate, error, isLoading, isError, isSuccess } = useSignInWithEmailPassword();
+  const { mutate, error, isLoading, isError, isSuccess, data } = useSignInWithEmailPassword();
   const isRemember = useSelector(selectIsRemember);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
@@ -25,7 +27,10 @@ const LoginCard = ({ redirect }) => {
   };
 
   useEffect(() => {
-    if (isSuccess) navigate(redirect);
+    if (isSuccess) {
+      Cookie.set("userInfo", JSON.stringify(data.data));
+      navigate(redirect);
+    }
   }, [isSuccess, redirect]); 
 
   return (

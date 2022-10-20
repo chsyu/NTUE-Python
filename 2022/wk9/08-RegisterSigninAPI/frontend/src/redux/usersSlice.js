@@ -1,15 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import {
-  signInWithEmailPassword,
-  registerWithEmailPassword,
-  updateProfile,
-} from "../api";
+import { createSlice } from '@reduxjs/toolkit';
 
 // Define initialState 
 const initialState = { 
-  isLoading: false, 
   userInfo: null, 
-  error: null,
   isRemember: true,
 };
 
@@ -19,14 +12,12 @@ const usersSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.userInfo = null;
-      state.error = null;
     },
     remember: (state, action) => {
       state.isRemember = action.payload;
     },
     setUser: (state, action) => {
       state.userInfo = action.payload;
-      state.error = null;
     }
   },
 });
