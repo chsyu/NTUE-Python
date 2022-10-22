@@ -37,8 +37,8 @@ class SignInRequestSchema(BaseModel):
 class UpdateProfileRequestSchema(BaseModel):
     user_id: int
     username: str
-    password: str
-    address: str
+    password: Optional[str]
+    address: Optional[str]
     tel: str
 
 
@@ -84,6 +84,8 @@ class UserSignInResponseSchema(BaseModel):
     token_type: str = 'bearer'
     user_id: int
     username: str
+    address: str
+    tel: str
 
 
 class ProductResponseWithUserSchema(ProductRequestSchema):
@@ -97,7 +99,7 @@ class ProductResponseWithUserSchema(ProductRequestSchema):
 
 class UserDetailResponseSchema(BaseModel):
     id: int
-    address: str
+    address: Optional[str]
     tel: str
     owner_id: int
 

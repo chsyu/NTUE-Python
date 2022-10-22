@@ -48,7 +48,7 @@ products = [
         "countInStock": 3
     },
     {
-        "category": "Home Accessories",
+        "category": "Home-Accessories",
         "name": "Triplets easter rabbit 3-pack",
         "sku": "sku_622147",
         "price": 16,
@@ -60,7 +60,7 @@ products = [
         "countInStock": 4
     },
     {
-        "category": "Home Accessories",
+        "category": "Home-Accessories",
         "name": "Nova pedal bin",
         "sku": "sku_622146",
         "price": 83,

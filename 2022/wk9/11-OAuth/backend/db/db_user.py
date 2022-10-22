@@ -9,7 +9,6 @@ from db.models import DbUser, DbUserDetail
 from utils.hash import bcrypt, verify
 from utils.oauth2 import create_access_token
 
-
 def register(db: Session, request: UserRequestSchema) :
     new_user = DbUser(
         username=request.username,
@@ -42,21 +41,33 @@ def signin(db: Session, request: SignInRequestSchema):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail='Incorrect password')
 
+    user_detail = db.query(DbUserDetail).filter(DbUserDetail.owner_id == user.id).first()
+    if not user_detail:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail=f'User detail with id = {user.id} not found')
+
     access_token = create_access_token(data={'username': user.username})
 
     return {
         'access_token': access_token,
         'user_id': user.id,
-        'username': user.username
+        'username': user.username,
+        'tel': user_detail.tel,
+        'address': user_detail.address
     }
 
 
 def update(db: Session, request: UpdateProfileRequestSchema):
     user = db.query(DbUser).filter(DbUser.id == request.user_id)
-    user.update({
-        DbUser.username: request.username,
-        DbUser.password: bcrypt(request.password)
-    })
+    if "password" in request:
+        user.update({
+            DbUser.username: request.username,
+            DbUser.password: bcrypt(request.password)
+        })
+    else:
+        user.update({
+            DbUser.username: request.username,
+        }) 
 
     user_detail = db.query(DbUserDetail).filter(DbUserDetail.owner_id == request.user_id).first()
     if not user_detail:
