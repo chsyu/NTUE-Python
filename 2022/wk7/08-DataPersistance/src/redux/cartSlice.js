@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import Cookie from "js-cookie"
 
 // Part1: Define Slice (including reducers and actions)
-const cartItems = JSON.parse(Cookie.get().cartItems) || [];
+const cartItems = !Cookie.get().cartItems ? [] : JSON.parse(Cookie.get().cartItems);
+
 const initialState = { cartItems };
 const cartSlice = createSlice({
   name: 'cart',
