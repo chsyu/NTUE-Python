@@ -6,6 +6,7 @@ export default function ProductList({ products, isLoading }) {
 
   return (
     <Row gutter={[32, 32]}>
+
       {products.map(product => (
         <Col
           key={product.id}
@@ -14,11 +15,14 @@ export default function ProductList({ products, isLoading }) {
           xl={{ span: 6 }}
           xxl={{ span: 4 }}
         >
-          <Skeleton loading={isLoading} active>
+          <Skeleton 
+            loading={isLoading} 
+            avatar round paragraph={{ rows: 4 }} active>
             <ProductItem product={product} />
           </Skeleton>
         </Col>
       ))}
+
     </Row>
   );
 }
