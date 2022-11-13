@@ -47,12 +47,12 @@ def create(db: Session, request: ProductRequestSchema) -> DbProduct:
 
 
 def get_all(db: Session) -> list[DbProduct]:
-    # time.sleep(2)
+    # time.sleep(10)
     return db.query(DbProduct).all()
 
 
 def get_product_by_id(product_id: int, db: Session) -> DbProduct:
-    # time.sleep(2)
+    # time.sleep(10)
     product = db.query(DbProduct).filter(DbProduct.id == product_id).first()
     if not product:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

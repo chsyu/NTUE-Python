@@ -4,6 +4,7 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query'
 import { Provider } from "react-redux";
+
 import Home from './pages/Home'
 import Product from './pages/Product'
 import Login from './pages/Login'

@@ -39,7 +39,7 @@ const tailFormItemLayout = {
 
 const RegisterCard = ({ redirect }) => {
 
-  const { mutate, error, isLoading, isError, isSuccess } = useRegisterWithEmailPassword();
+  const { mutate, error, isLoading, isError, isSuccess, data } = useRegisterWithEmailPassword();
 
   const [form] = Form.useForm();
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const RegisterCard = ({ redirect }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      Cookie.set("userInfo", JSON.stringify(data.data));
+      Cookie.set("userInfo", JSON.stringify(data?.data));
       navigate(redirect);
     }
   }, [isSuccess, redirect]); 
@@ -182,7 +182,7 @@ const RegisterCard = ({ redirect }) => {
               <WarningOutlined className="site-form-item-icon" />
               {"  "}There was a problem
             </h3>
-            <p className="login-form__error-message">{error.response.data.detail}</p>
+            <p className="login-form__error-message">{error.response.data?.detail}</p>
           </div>
         )}
       </Form.Item>

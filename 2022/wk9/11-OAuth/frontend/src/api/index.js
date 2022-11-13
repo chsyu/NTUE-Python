@@ -27,11 +27,14 @@ export const signInWithEmailPassword = async ({ email, password }) => {
 };
 
 export const registerWithEmailPassword = async ({ email, password, username }) => {
-  return await axios.post(`${URL}/users/register`, {
+  const data =  await axios.post(`${URL}/users/register`, {
     email,
     password,
     username,
   });
+  console.log('register response = ')
+  console.log(data)
+  return data;
 };
 
 export const updateProfile = async ({ username, password, address, tel, access_token, user_id }) => {

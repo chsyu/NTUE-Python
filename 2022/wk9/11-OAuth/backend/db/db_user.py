@@ -21,11 +21,20 @@ def register(db: Session, request: UserRequestSchema) :
         db.commit()
         db.refresh(new_user)
         access_token = create_access_token(data={'username': new_user.username})
-
+        print('register result in backend = ')
+        print({
+            'access_token': access_token,
+            'user_id': new_user.id,
+            'username': new_user.username,
+            'tel': '',
+            'address': ''
+        })
         return {
             'access_token': access_token,
             'user_id': new_user.id,
-            'username': new_user.username
+            'username': new_user.username,
+            'tel': '',
+            'address': ''
         }
     except IntegrityError as exc:
         db.rollback()

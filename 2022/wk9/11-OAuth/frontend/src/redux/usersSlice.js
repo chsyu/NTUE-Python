@@ -3,11 +3,8 @@ import Cookie from "js-cookie"
 
 // Define initialState 
 
-console.log('Cookie.userInfo = ')
-console.log(!!Cookie.get().userInfo);
+
 const userInfo = !Cookie.get().userInfo ? null : JSON.parse(Cookie.get().userInfo);
-console.log('userInfo = ')
-console.log(userInfo)
 
 const initialState = {
   userInfo,
