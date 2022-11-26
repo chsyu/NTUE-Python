@@ -1,0 +1,62 @@
+version: "3"
+
+services:
+
+  api:
+    build: ./backend/.
+    container_name: api
+    command: python3 backend/app.py
+    environment:
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
+    volumes:
+      - .:/code
+    ports:
+      - "5001:5000"
+    depends_on:
+      - db
+    networks:
+      - local-net
+
+
+  db:
+    hostname: db
+    container_name: db
+    build: ./mysql
+    restart: always
+    tty: true
+    environment:
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_HOST: db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-db:/var/lib/mysql 
+    networks:
+      - local-net
+
+
+  adminer:
+      image: adminer:latest
+      container_name: adminer
+      restart: unless-stopped
+      ports:
+        - 8000:8080
+      depends_on:
+        - db
+      environment:
+        ADMINER_DEFAULT_SERVER: db
+      networks:
+        - local-net
+
+volumes:
+  mysql-db:
+
+networks:
+  local-net:

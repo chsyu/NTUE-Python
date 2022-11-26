@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+
+  fastapi:
+    build: .
+    image: "chsyu/fastapi:1.1"
+    command: python app.py
+    ports:
+      - 5001:5000
+    volumes:
+      - .:/code/shopping-cart.db
+
+      
+

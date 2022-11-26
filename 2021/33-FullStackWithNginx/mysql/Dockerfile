@@ -1,3 +1,3 @@
-FROM mysql:5.7
+FROM arm64v8/mysql:oracle
 
 RUN touch /var/log/mysql/mysqld.log

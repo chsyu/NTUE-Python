@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+
+  docker.db.postgres:
+    container_name: postgres-docker
+    image: postgres:14.3-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: railway
+    ports:
+      - 5432:5432
+
+      
+
