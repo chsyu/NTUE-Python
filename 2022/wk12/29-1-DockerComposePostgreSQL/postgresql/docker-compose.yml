@@ -2,8 +2,8 @@ version: "3.8"
 
 services:
 
-  docker.db.postgres:
-    container_name: postgres-docker
+  postgres:
+    container_name: postgres
     image: postgres:14.3-alpine
     environment:
       POSTGRES_USER: postgres
@@ -11,6 +11,8 @@ services:
       POSTGRES_DB: railway
     ports:
       - 5432:5432
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
 
       
 
