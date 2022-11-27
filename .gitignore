@@ -2,3 +2,4 @@ node_moduels/
 *.log
 .eslintcache
 .DS_Store
+pgdata/
