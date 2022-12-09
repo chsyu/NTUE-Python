@@ -15,6 +15,11 @@ const LoginCard = () => {
   const isRemember = useSelector(selectIsRemember);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
+  console.log('loginCard')
+  console.log({ error, isLoading, isError, isSuccess, data });
+
+  console.log('error = ')
+  console.log(error?.message)
 
   const onFinish = async (values) => {
     console.log("Received values of form: ", values);
@@ -104,7 +109,7 @@ const LoginCard = () => {
           </Button>
         )}
         Or <Link href={`/auth/register`}>register now!</Link>
-        { !data?.detail ? (
+        { !isError ? (
           <></>
         ) : (
           <div className="login-form__error-wrap">
@@ -112,7 +117,7 @@ const LoginCard = () => {
               <WarningOutlined className="site-form-item-icon" />
               {"  "}There was a problem
             </h3>
-            <p className="login-form__error-message">{data?.detail}</p>
+            <p className="login-form__error-message">{error?.message}</p>
           </div>
         )}
       </Form.Item>

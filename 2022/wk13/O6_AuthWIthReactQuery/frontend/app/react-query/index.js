@@ -8,10 +8,7 @@ export const useSignInWithEmailPassword = () => {
    const dispatch = useDispatch();
    const { mutate, isLoading, isSuccess, isError, data, error, status } = useMutation(signInWithEmailPassword, {
       onSuccess: (data) => {
-         if(!!data?.access_token)
-            dispatch(setUser(data))
-         else
-            dispatch(logout());
+         dispatch(setUser(data))
       }
    });
    return { mutate, isLoading, isSuccess, isError, data, error, status };
@@ -21,10 +18,7 @@ export const useRegisterWithEmailPassword = () => {
    const dispatch = useDispatch();
    const { mutate, isLoading, isSuccess, isError, data, error, status } = useMutation(registerWithEmailPassword, {
       onSuccess: (data) =>  {
-         if(!!data?.access_token)
-            dispatch(setUser(data))
-         else
-            dispatch(logout());
+         dispatch(setUser(data))
       }
    });
    return { mutate, isLoading, isSuccess, isError, data, error, status };

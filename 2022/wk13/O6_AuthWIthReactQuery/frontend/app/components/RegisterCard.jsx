@@ -176,7 +176,7 @@ const RegisterCard = () => {
               <WarningOutlined className="site-form-item-icon" />
               {"  "}There was a problem
             </h3>
-            <p className="login-form__error-message">{error.response.data?.detail}</p>
+            <p className="login-form__error-message">{error?.message}</p>
           </div>
         )}
       </Form.Item>

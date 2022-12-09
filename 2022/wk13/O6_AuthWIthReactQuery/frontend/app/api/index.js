@@ -1,7 +1,7 @@
 import axios from "axios"
 
-const api_url = "https://fastapi4railway2022-production.up.railway.app/api/v1"
-// const api_url = "http://127.0.0.1:5000/api/v1"
+// const api_url = "https://fastapi4railway2022-production.up.railway.app/api/v1"
+const api_url = "http://127.0.0.1:5000/api/v1"
 
 export const getProductById = async (product_id) => {
   const res = await fetch(`${api_url}/products/id/${product_id}`);
@@ -35,7 +35,9 @@ export const signInWithEmailPassword = async ({ email, password }) => {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
-    return await res.json();
+    const response = await res.json();
+    if(res.status == 400) throw new Error(response.detail);
+    return response;
 };
 
 export const registerWithEmailPassword = async ({ email, password, username }) => {
@@ -56,6 +58,8 @@ export const registerWithEmailPassword = async ({ email, password, username }) =
       "Content-type": "application/json; charset=UTF-8"
     }
   })
-  return await res.json();
+  const response = await res.json();
+  if(res.status == 400) throw new Error(response.detail);
+  return response;
 };
 
