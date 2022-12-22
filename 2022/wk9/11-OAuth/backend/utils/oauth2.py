@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from db.database import get_db
 from db import db_user
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/v1/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="v1/token")
 
 SECRET_KEY = 'ntuedtd is good'
 ALGORITHM = 'HS256'
