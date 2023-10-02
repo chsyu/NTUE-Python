@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "course_title": "F2E",
+    "course_img": "images/f2e.jpg"
+  },
+  {
+    "id": 2,
+    "course_title": "Arduino",
+    "course_img": "images/iot.jpg"
+  },
+  {
+    "id": 3,
+    "course_title": "APP-1",
+    "course_img": "images/app.jpg"
+  },
+  {
+    "id": 4,
+    "course_title": "APP-2",
+    "course_img": "images/app.jpg"
+  },
+  {
+    "id": 5,
+    "course_title": "APP-3",
+    "course_img": "images/app.jpg"
+  },
+  {
+    "id": 6,
+    "course_title": "JS",
+    "course_img": "images/js.jpg"
+  }
+]
