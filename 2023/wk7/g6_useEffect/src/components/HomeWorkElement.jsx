@@ -14,7 +14,7 @@ function HomeWorkElement({
 
   return (
     <div className="mt-4">
-      <h2 style={style.title_style}>{homework_title}</h2>
+      <h2 className="course__title">{homework_title}</h2>
       <p style={style.semester}>{school}:{semester}</p>
       <Link to={`courses/${homework_title}`} className="course__link">
         <img

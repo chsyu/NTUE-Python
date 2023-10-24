@@ -37,7 +37,7 @@ function HomeWork({ homeWorks }) {
             <div className={styles.content}>
               <h1 className={styles.title}>題目：{homework.workName}</h1>
               <p>作者：{homework.name.join()}</p>
-              <p>技術：{homework.skill.join()}</p>
+              <p>技術：{homework.skill.join(", ")}</p>
             </div>
           </Col>
         </Row>        

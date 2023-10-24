@@ -180,7 +180,21 @@
 
 .course__image {
   width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
   display: block;
+  object-fit: cover;
+	object-position: center;
+}
+
+.course__title {
+    text-align: center;
+    color: gray;
+    font-size: 1.4rem;
+    font-weight: 300;
+    line-height: 1.8rem;
+    max-height: 1.8rem;
+    overflow: hidden;
 }
 
 /* Resume Style */
