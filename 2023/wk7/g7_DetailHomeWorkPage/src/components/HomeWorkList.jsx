@@ -8,11 +8,11 @@ function HomeWork({ title, homeWorks }) {
       <div className="container">
         <h1 className="text-center">{title}</h1>
         <hr className="divider--dark" />
-        <Row gutter={[16, 16]}>
+        <Row gutter={[24, 24]}>
           {Object.keys(homeWorks).map(school => 
             Object.keys(homeWorks[school]).map(semester => homeWorks[school][semester].map(homework => {
             return (
-              <Col key={homework.workName + homework.name} sm={{ span: 12 }} lg={{ span: 6 }}>
+              <Col key={homework.workName + homework.name} xs={24} sm={12} lg={6}>
                 <HomeWorkElement
                   school={school}
                   semester={semester}
