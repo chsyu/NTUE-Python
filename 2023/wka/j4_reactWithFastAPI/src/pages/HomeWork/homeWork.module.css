@@ -1,0 +1,18 @@
+.main_area {
+   justify-content: center;
+   margin-top: 10rem;
+}
+
+.title {
+   font-size: 2rem;
+   font-weight: 300;
+}
+
+.img {
+   display: block;
+   margin: 0 auto;
+   width: 100%;
+   aspect-ratio: 4/3;
+   object-fit: cover;
+	object-position: center;
+}
