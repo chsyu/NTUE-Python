@@ -44,18 +44,6 @@ def create(db: Session, request: HomeworkRequestSchema):
     return HomeworkResponseSchema.from_orm(new_homework)
 
 
-def str2List(homework_records: list):
-    for record in homework_records:
-        if record.skill:  # 確保 school 字段不是空的
-            # 將 school 字串轉換回列表
-            record.skill = ast.literal_eval(record.skill)
-        if record.name:  # 確保 school 字段不是空的
-            # 將 school 字串轉換回列表
-            record.name = ast.literal_eval(record.name)
-
-    return homework_records
-
-
 def get_all(db: Session):
     homework = db.query(DbHomework).all()
     if not homework:

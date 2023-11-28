@@ -17,25 +17,30 @@ def create(request: HomeworkRequestSchema, db: Session = Depends(get_db)):
 
 
 @router.get('/feed')
-def feed_initial_products(db: Session = Depends(get_db)):
+def feed_initial_homeworks(db: Session = Depends(get_db)):
+    """ feed initial homeworks """
     return db_homework.db_feed(db)
 
 
 @router.get('/all', response_model=List[HomeworkResponseSchema])
 def get_all_homeworks(db: Session = Depends(get_db)):
+    """ get all homeworks """
     return db_homework.get_all(db)
 
 
 @router.get('/semester', response_model=List[HomeworkResponseSchema])
 def get_homeworks_by_semester(semester: str = "", db: Session = Depends(get_db)):
+    """ get homework by school """
     return db_homework.get_homework_by_semester(semester, db)
 
 
 @router.get('/school', response_model=List[HomeworkResponseSchema])
-def get_homeworks_by_semester(school: str = "", db: Session = Depends(get_db)):
+def get_homeworks_by_school(school: str = "", db: Session = Depends(get_db)):
+    """ get homework by semester """
     return db_homework.get_homework_by_school(school, db)
 
 
 @router.get('/id', response_model=HomeworkResponseSchema)
 def get_homework_by_id(id: int = 1, db: Session = Depends(get_db)):
+    """ get homework by id """
     return db_homework.get_homework_by_id(id, db)
