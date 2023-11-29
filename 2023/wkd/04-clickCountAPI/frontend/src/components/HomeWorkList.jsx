@@ -5,7 +5,7 @@ function HomeWork({ title, homeWorks }) {
   return (
     <article className="course py-3 py-sm-5">
       <div className="container">
-        <h1 className="text-center">{title}</h1>
+        <h1 className="text-center">{title.toUpperCase()}</h1>
         <hr className="divider--dark" />
         <Row gutter={[24, 24]}>
           {homeWorks.map(homework => {

@@ -37,7 +37,7 @@ function HomeWork() {
       <Nav />
       <div className="container">
         {homework === null ?
-          <h1 style={{lineHeight: '100vh', textAlign: 'center'}}>Loading...</h1> :
+          <h1 style={{lineHeight: '100dvh', textAlign: 'center'}}>Loading...</h1> :
           <Row gutter={[24, 24]} style={{ justifyContent: 'center', marginTop: '10rem' }}
           >
             <Col xs={{ span: 24 }}
@@ -52,10 +52,11 @@ function HomeWork() {
             <Col xs={{ span: 24 }}
               lg={{ span: 12 }}>
               <div className={styles.content}>
-                <h1 className={styles.title}>題目：{homework.workName}</h1>
-                <p>作者：{homework.name.join()}</p>
-                <p>技術：{homework.skill.join(", ")}</p>
-                <p>點擊次數：{homework.clkCnt}</p>
+                <h1 className={styles.title}><strong>題目</strong>：{homework.workName}</h1>
+                <p><strong>作者</strong>：{homework.name.join()}</p>
+                <p><strong>技術</strong>：{homework.skill.join(", ")}</p>
+                <p><strong>網址</strong>：<a href={homework.websiteUrl}>{homework.websiteUrl}</a></p>
+                <p><strong>點擊</strong>：{homework.clkCnt}次</p>
               </div>
             </Col>
           </Row>
