@@ -21,7 +21,7 @@ function Home() {
   return (
     <div>
       <Nav />
-      <Header tag="NTUE / NTUT" />
+      <Header />
       {homeWorks === null ?
         <h1 style={{ lineHeight: '100vh', textAlign: 'center' }}>
           Loading...</h1> :

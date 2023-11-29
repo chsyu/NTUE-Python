@@ -25,7 +25,7 @@ function Search() {
 
   useEffect(() => {
     getHomeWorksData();
-  }, [homeWorks]);
+  }, [tag]);
 
   return (
     <div>

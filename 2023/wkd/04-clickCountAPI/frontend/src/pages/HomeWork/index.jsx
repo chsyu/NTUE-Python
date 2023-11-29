@@ -12,8 +12,7 @@ function HomeWork() {
 
   const [homework, setHomework] = useState(null);
   const getHomeWorkData = async (id) => {
-    await updateClkCnt(id);
-    const response = await getHomeWorkById(id);
+    const response = await updateClkCnt(id);
     setHomework(response);
   }
 

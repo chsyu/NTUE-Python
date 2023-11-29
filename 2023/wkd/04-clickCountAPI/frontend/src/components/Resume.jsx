@@ -4,7 +4,7 @@ function Resume() {
   return (
     <article className="resume py-4 py-sm-5">
       <div className="container d-flex flex-column align-items-center">
-        <h1>我</h1>
+        <h1>課程概述</h1>
         <hr className="divider--light" />
         <p className="text-justify resume__description py-3">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
