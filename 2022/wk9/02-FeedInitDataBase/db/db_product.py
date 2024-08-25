@@ -59,5 +59,5 @@ def get_product_by_category(category: str, db: Session):
     product = db.query(DbProduct).filter(DbProduct.category == category).all()
     if not product:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail=f'Product with category = {id} not found')
+                            detail=f'Product with category = {category} not found')
     return product
