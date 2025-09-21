@@ -10,8 +10,7 @@ export async function fetchPosts() {
   return res.data
 }
 
-export async function fetchPost({ slug, id }) {
-  const key = slug ?? id
-  const res = await api.get(`/posts/${encodeURIComponent(key)}`)
+export async function fetchPost({ slug }) {
+  const res = await api.get(`/posts/${encodeURIComponent(slug)}`)
   return res.data
 }

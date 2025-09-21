@@ -4,7 +4,7 @@ const listEl = document.getElementById('list');
 function cardHTML(p) {
   const author = p.author ?? '';
   const title = p.title ?? '無標題';
-  const href = `/post.html?slug=${encodeURIComponent(p.slug || '')}&id=${encodeURIComponent(p.id ?? '')}`;
+  const href = `/post.html?slug=${encodeURIComponent(p.slug || '')}`;
   return `
     <a class="block rounded-xl border border-slate-200 bg-white p-4 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition"
        href="${href}">

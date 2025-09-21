@@ -17,8 +17,6 @@ createRoot(document.getElementById('root')).render(
           <Route element={<App />}>
             <Route path="/" element={<Home />} />
             <Route path="/posts/:slug" element={<Post />} />
-            {/* 舊連結相容 */}
-            <Route path="/post.html" element={<Post />} />
           </Route>
         </Routes>
       </BrowserRouter>

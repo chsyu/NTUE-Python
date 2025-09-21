@@ -4,7 +4,6 @@ const contentEl = document.getElementById('content');
 const path = location.pathname;
 const params = new URLSearchParams(location.search);
 const slug = params.get('slug');
-const id   = params.get('id');
 
 function renderArticle(post) {
   const author = post.author ?? '';
@@ -19,14 +18,15 @@ function renderArticle(post) {
   `;
 }
 
-if (!slug && !id) {
+if (!slug ) {
   document.title = '參數缺失';
-  contentEl.innerHTML = '<div class="text-rose-600">缺少 slug 或 id。</div>';
+  contentEl.innerHTML = '<div class="text-rose-600">缺少 slug </div>';
 } else {
   try {
     contentEl.innerHTML = '<div class="text-slate-500">載入中…</div>';
-    const key = slug ?? id;
-    const res = await axios.get(`http://127.0.0.1:5000/api/posts/${encodeURIComponent(key)}`, { timeout: 10000 });
+    const res = await axios.get(
+      `http://127.0.0.1:5000/api/posts/${encodeURIComponent(slug)}`, 
+      { timeout: 10000 });
     const post = res.data;
 
     document.title = post.title || '文章';
