@@ -12,7 +12,6 @@ export default function Post() {
     enabled: Boolean(slug)
   })
 
-
   useEffect(() => {
     if (data?.title) document.title = data.title
     return () => { document.title = '我的部落格' }
