@@ -3,17 +3,16 @@ const contentEl = document.getElementById('content');
 
 const path = location.pathname;
 const params = new URLSearchParams(location.search);
-const prettySlug = path.startsWith('/posts/') ? path.split('/').pop() : null;
-
-const slug = prettySlug || params.get('slug');
+const slug = params.get('slug');
 const id   = params.get('id');
 
 function renderArticle(post) {
   const author = post.author ?? '';
+  const title = post.title ?? '無標題';
   const body = post.content || post.html || '';
   contentEl.innerHTML = `
     <article class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h1 class="text-2xl md:text-3xl font-bold">${post.title}</h1>
+      <h1 class="text-2xl md:text-3xl font-bold">${title}</h1>
       <p class="mt-1 text-sm text-slate-600">作者：${author}</p>
       <div class="prose prose-slate max-w-none mt-4">${body}</div>
     </article>
@@ -31,10 +30,6 @@ if (!slug && !id) {
     const post = res.data;
 
     document.title = post.title || '文章';
-
-    if (post.slug && path.endsWith('/post.html')) {
-      history.replaceState({ slug: post.slug }, '', `/posts/${post.slug}`);
-    }
 
     renderArticle(post);
   } catch (err) {

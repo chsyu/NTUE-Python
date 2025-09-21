@@ -26,4 +26,4 @@ def get_post(slug: str):
     return {"error": "Post not found"}
 
 if __name__ == "__main__":
-    uvicorn.run("app:app", port=5000, reload=True)
+    uvicorn.run("main:app", port=5000, reload=True)
