@@ -4,3 +4,5 @@ node_moduels/
 .DS_Store
 pgdata/
 .env
+*.env
+**/.env
