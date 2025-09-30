@@ -11,9 +11,9 @@ const PORT = 3000;  // 或其他適當的端口號
 app.use(express.static(path.join(__dirname, 'dist')));
 
 // 針對根目錄的請求回覆 index.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// });
 
 // 其他所有路徑回傳 404 錯誤頁面
 app.use((req, res, next) => {
