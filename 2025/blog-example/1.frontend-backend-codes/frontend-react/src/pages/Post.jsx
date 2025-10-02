@@ -7,9 +7,8 @@ export default function Post() {
   const { slug} = useParams()
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ['post', slug],
+    queryKey: [slug],
     queryFn: () => fetchPost({ slug }),
-    enabled: Boolean(slug)
   })
 
   useEffect(() => {
