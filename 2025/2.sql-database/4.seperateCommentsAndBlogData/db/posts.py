@@ -135,14 +135,10 @@ def get_comments_by_post_id(post_id: int):
     return [comment for comment in comments if comment["post_id"] == post_id]
 
 # 查詢函數：獲取包含留言的完整文章資料
-def get_post_with_comments(post_id: int = None, slug: str = None):
+def get_post_with_comments(slug: str = None):
     """模擬 SQL JOIN 查詢，返回包含留言的文章資料"""
     # 找到指定的文章
-    target_post = None
-    if post_id:
-        target_post = next((post for post in posts if post["id"] == post_id), None)
-    elif slug:
-        target_post = next((post for post in posts if post["slug"] == slug), None)
+    target_post = next((post for post in posts if post["slug"] == slug), None)
     
     if not target_post:
         return None
