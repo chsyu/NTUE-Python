@@ -1,0 +1,65 @@
+from fastapi import FastAPI
+from contextlib import asynccontextmanager
+import logging
+
+from db.init_data import create_tables, init_database
+from routers.posts import router as posts_router
+
+# 設定日誌
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger(__name__)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """應用程式生命週期管理"""
+    # 啟動時執行
+    try:
+        logger.info("🔧 建立資料庫表格...")
+        create_tables()
+        
+        logger.info("📊 初始化資料...")
+        init_database()
+        
+        logger.info("🚀 應用程式啟動完成！")
+        
+    except Exception as e:
+        logger.error(f"應用程式初始化失敗: {e}")
+        raise
+    
+    yield
+    
+    # 關閉時執行
+    logger.info("👋 應用程式關閉")
+
+# 建立 FastAPI 應用程式
+app = FastAPI(
+    title="Posts API - 簡化教學版",
+    description="學習關聯資料庫的簡化版 REST API",
+    version="1.0.0-simple",
+    lifespan=lifespan
+)
+
+# 註冊路由
+app.include_router(posts_router)
+
+# 根路徑
+@app.get("/")
+async def root():
+    return {
+        "message": "歡迎使用 Posts API 簡化教學版",
+        "purpose": "學習關聯資料庫概念",
+        "docs": "/docs"
+    }
+
+# 健康檢查
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "version": "simple"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
