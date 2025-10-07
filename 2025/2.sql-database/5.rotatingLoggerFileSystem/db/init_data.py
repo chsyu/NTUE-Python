@@ -1,12 +1,12 @@
-"""資料庫初始化模組"""
-import logging
+"""資料庫初始化模組 - 負責建立表格和匯入初始資料"""
 from sqlalchemy.orm import Session
-
-from .engine import engine
 from models.posts import PostDB
+from .engine import engine
 from data.init_posts import posts
+from config.logging_config import get_logger
 
-logger = logging.getLogger(__name__)
+# 獲取 logger
+logger = get_logger(__name__)
 
 def init_posts_data():
     """初始化文章資料"""
@@ -36,6 +36,7 @@ def init_posts_data():
             
         except Exception as e:
             logger.error(f"文章資料匯入失敗: {e}")
+            session.rollback()
             raise
 
 def init_database():

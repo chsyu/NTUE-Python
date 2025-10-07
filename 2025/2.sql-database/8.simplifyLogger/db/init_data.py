@@ -5,10 +5,10 @@ from .engine import engine
 from models import Author, Post, Comment
 from data.init_authors import authors as init_authors_data
 from data.init_posts import posts as init_posts_data
-from utils.logging_config import get_app_logger
+import logging
 
 # 只獲取 logger，不重複設定
-logger = get_app_logger(__name__)
+logger = logging.getLogger(__name__)
 
 def init_database():
     """初始化整個資料庫（簡化版 - 測試用）"""
