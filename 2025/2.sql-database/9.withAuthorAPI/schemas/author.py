@@ -34,16 +34,6 @@ class CommentInAuthor(BaseModel):
     post_slug: str   # 評論所屬文章的 slug
     
     model_config = ConfigDict(from_attributes=True)
-    
-    @classmethod
-    def model_validate(cls, obj):
-        """自訂驗證方法，從 Comment 物件建立"""
-        return cls(
-            id=obj.id,
-            content=obj.content,
-            post_title=obj.post.title,
-            post_slug=obj.post.slug
-        )
 
 class AuthorDetailResponse(AuthorBase):
     """作者詳細資料回應 schema"""
@@ -52,15 +42,4 @@ class AuthorDetailResponse(AuthorBase):
     comments: List[CommentInAuthor] = []
     
     model_config = ConfigDict(from_attributes=True)
-    
-    @classmethod
-    def model_validate(cls, obj):
-        """自訂驗證方法，處理關聯資料"""
-        return cls(
-            id=obj.id,
-            name=obj.name,
-            email=obj.email,
-            posts=[PostInAuthor.model_validate(post) for post in obj.posts],
-            comments=[CommentInAuthor.model_validate(comment) for comment in obj.comments]
-        )
     

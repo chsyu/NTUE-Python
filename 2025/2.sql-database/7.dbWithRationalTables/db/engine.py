@@ -10,7 +10,7 @@ engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
     connect_args={"check_same_thread": False},
     poolclass=StaticPool,
-    echo=True  # 開發階段可以看到 SQL 查詢，正式環境可設為 False
+    echo=True # 啟用 SQL 查詢日誌
 )
 
 # Dependency 函式，用於獲取資料庫 session

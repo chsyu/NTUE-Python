@@ -7,10 +7,12 @@ from db.engine import get_db
 from models import Post, Author, Comment
 from schemas.post import PostResponse, PostListResponse
 from schemas.comment import CommentInPost
-from utils.logging_config import get_app_logger
+from config.logging_config import get_logger
 
 router = APIRouter(prefix="/api", tags=["posts"])
-logger = get_app_logger(__name__)
+
+logger = get_logger(__name__)
+
 
 @router.get("/posts", response_model=PostListResponse)
 async def get_all_posts(session: Session = Depends(get_db)):
@@ -48,12 +50,14 @@ async def get_all_posts(session: Session = Depends(get_db)):
                 comments=comments
             )
             post_responses.append(post_response)
-        
+
+        logger.info(f"成功獲取文章列表: {len(post_responses)} 篇文章")
         return PostListResponse(
             posts=post_responses,
             total=len(post_responses)
         )
     except Exception as e:
+        logger.error(f"獲取文章列表時發生錯誤: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"獲取文章列表時發生錯誤: {str(e)}"
@@ -98,10 +102,12 @@ async def get_post_by_slug(slug: str, session: Session = Depends(get_db)):
             comments=comments
         )
         
+        logger.info(f"成功獲取文章: slug='{slug}', id={post.id}, title='{post.title}'")
         return post_response
     except HTTPException:
         raise
     except Exception as e:
+        logger.error(f"獲取文章時發生錯誤: {str(e)}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"獲取文章時發生錯誤: {str(e)}"

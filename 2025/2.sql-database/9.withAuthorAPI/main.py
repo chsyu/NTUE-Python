@@ -4,15 +4,11 @@ from contextlib import asynccontextmanager
 from db.init_data import create_tables, init_database
 from routers.posts import router as posts_router
 from routers.authors import router as authors_router
-import logging
+from config.logging_config import setup_rotating_logging, get_logger
 
-# 設定日誌
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    datefmt='%Y-%m-%d %H:%M:%S'
-)
-logger = logging.getLogger(__name__)
+# 設定日誌系統（檔案輪替版本）
+setup_rotating_logging() 
+logger = get_logger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -61,4 +57,10 @@ async def health_check():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=5000)
+    
+    # 重要：使用我們的日誌配置讓 uvicorn 日誌寫入檔案
+    uvicorn.run(
+        app, 
+        host="127.0.0.1", 
+        port=5000
+    )
