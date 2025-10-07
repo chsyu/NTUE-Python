@@ -4,6 +4,7 @@ from typing import Optional
 import uvicorn
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
 
 # 讀取 .env 檔案
@@ -36,10 +37,10 @@ def chat(req: ChatRequest):
         temperature=0.3
     )
 
-    chain = prompt | llm  # LCEL：提示 → LLM
+    chain = prompt | llm | StrOutputParser()
 
     result = chain.invoke({"question": req.user})
-    return {"answer": result.content}
+    return {"answer": result}
 
 if __name__ == "__main__":
     uvicorn.run("main:app", port=5000, reload=True)
