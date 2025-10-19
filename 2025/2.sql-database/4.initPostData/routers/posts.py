@@ -14,16 +14,14 @@ router = APIRouter(
 
 @router.get("", response_model=List[PostResponse])
 def list_posts(db: Session = Depends(get_db)):
-    rows = (
-        db.query(PostDB)
-         .order_by(PostDB.id.asc())
-         .all()
-    )
+    stmt = select(PostDB).order_by(PostDB.id.asc())
+    rows = db.scalars(stmt).all()
     return rows
 
 @router.get("/{slug}", response_model=PostResponse)
 def get_post_by_slug(slug: str, db: Session = Depends(get_db)):
-    post = db.scalar(select(PostDB).where(PostDB.slug == slug))
+    stmt = select(PostDB).where(PostDB.slug == slug)
+    post = db.scalar(stmt)
     if not post:
         raise HTTPException(status_code=404, detail="Post not found")
     return post
