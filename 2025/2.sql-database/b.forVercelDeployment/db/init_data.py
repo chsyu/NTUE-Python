@@ -1,4 +1,4 @@
-"""資料庫初始化模組 - 支援 Author, Post, Comment 三表關聯（批次匯入版）"""
+"""資料庫初始化模組 - 支援 Author, Post, Comment 三表關聯（批次匯入）"""
 from sqlalchemy.orm import Session
 from sqlalchemy import select, func
 
@@ -62,7 +62,7 @@ def init_database():
                         author_id=author_id_by_name[p["author"]],
                     )
                 )
-            db.add_all(post_objs)  # add_all() 在 SQLAlchemy 2.x 中仍然有效
+            db.add_all(post_objs)  # add_all() 
             db.flush()  # 取得文章 id
 
             # 建立「slug → 文章ID」映射
@@ -70,7 +70,7 @@ def init_database():
             logger.info(f"成功建立文章映射，共 {len(post_id_by_slug)} 筆")
 
             # ----------------------------
-            # 3) 批次新增「評論」- 使用現代 SQLAlchemy 2.x 語法
+            # 3) 批次新增「評論」
             # ----------------------------
             logger.info("匯入評論資料（批次）...")
             comment_objs = []
@@ -84,7 +84,7 @@ def init_database():
                             author_id=author_id_by_name[c["author"]],
                         )
                     )
-            db.add_all(comment_objs)  # add_all() 在 SQLAlchemy 2.x 中仍然有效
+            db.add_all(comment_objs)  # add_all() 
 
             # ----------------------------
             # 4) 一次提交所有變更
@@ -112,7 +112,7 @@ def create_tables():
         logger.info("資料庫表格建立完成")
     except Exception as e:
         logger.error(f"資料庫表格建立失敗: {e}")
-        # 在 Vercel 環境中，不要讓表格建立失敗阻止應用程式啟動
+        # 在 Vercel 環境中, Edge Function 的環境中不讓表格建立失敗阻止應用程式啟動
         if os.getenv("VERCEL") == "1":
             logger.warning("Vercel 環境：忽略表格建立錯誤，繼續啟動")
         else:
