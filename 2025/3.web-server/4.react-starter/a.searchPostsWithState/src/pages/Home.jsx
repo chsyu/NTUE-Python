@@ -10,7 +10,6 @@ function Home() {
       content.replace(/<[^>]*>/g, '').substring(0, 30) + ' ' :
       'No content'
 
-   // 搜尋邏輯 - 修正版本
    const filteredPosts = useMemo(() => {
       // 如果沒有 posts 數據，返回空陣列
       if (!posts) {
