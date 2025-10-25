@@ -11,6 +11,5 @@ app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, "dist", "404.html"));
 });
 
-app.listen(PORT, () =>
-  console.log(`Server is running on http://localhost:${PORT}`)
-);
+// 匯出 app 供 Vercel 使用
+module.exports = app;
