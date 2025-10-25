@@ -18,7 +18,16 @@ export default function Home() {
     queryFn: fetchPosts
   })
 
-  if (isLoading) return <div className="text-slate-500">載入中…</div>
+  if (isLoading) return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {[...Array(6)].map((_, i) => (
+        <div key={i} className="animate-pulse">
+          <div className="h-4 bg-slate-200 rounded mb-2"></div>
+          <div className="h-3 bg-slate-200 rounded w-1/2"></div>
+        </div>
+      ))}
+    </div>
+  )
   if (isError) return <div className="text-rose-600">讀取失敗：{error.message}</div>
   if (!data || data.length === 0) return <div className="text-slate-500">目前沒有文章。</div>
 

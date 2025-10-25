@@ -18,7 +18,7 @@ try {
   listEl.textContent = '載入中…';
   const res = await axios.get('http://127.0.0.1:5000/api/posts', { timeout: 10000 });
   const posts = res.data;
-
+  console.log(posts);
   if (!Array.isArray(posts) || posts.length === 0) {
     listEl.innerHTML = '<div class="text-slate-500">目前沒有文章。</div>';
   } else {
