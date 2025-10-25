@@ -1,11 +1,10 @@
 const express = require("express");
-const path = require("path");
 
 const app = express();
 
 // 回覆index.html
 app.get('/index.html', (req, res) => {
-  res(`
+  res.send(`
     <html>
       <head>
         <title>Plain Text Response</title>
