@@ -1,9 +1,15 @@
 import { useParams } from 'react-router-dom'
+import { useEffect } from 'react'
 import { usePost } from '../hooks'
 
 function Post() {
   const { slug } = useParams()
   const { data: post, isLoading, error } = usePost(slug)
+
+  // 設置頁面標題
+  useEffect(() => {
+    document.title = post?.title 
+  }, [post])
 
   if (isLoading) {
     return (
@@ -27,23 +33,11 @@ function Post() {
     <article className="max-w-4xl mx-auto">
       <header className="mb-8">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">{post.title}</h1>
-        <div className="flex items-center text-gray-600 mb-6">
-          <span className="mr-4">發布日期: {post.date}</span>
-          <span className="mr-4">作者: {post.author}</span>
-          {post.tags && (
-            <div className="flex gap-2">
-              {post.tags.map((tag, index) => (
-                <span key={index} className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
+        <p className="mr-4">作者: {post.author}</p>
       </header>
       
       <div className="prose prose-lg max-w-none">
-        <div dangerouslySetInnerHTML={{ __html: post.content }} />
+        <p>{post.content}</p>
       </div>
    
     </article>

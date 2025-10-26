@@ -2,9 +2,9 @@ import { usePosts } from '../hooks'
 import PostCard from '../components/PostCard'
 
 function Home() {
-   const { data: posts, isLoading, error } = usePosts()
+   const { data: posts, isLoading, error } = usePosts()   
    const truncatedContent = content => content ?
-      content.replace(/<[^>]*>/g, '').substring(0, 30) + ' ' :
+      content.substring(0, 30) + ' ' :
       'No content'
 
    if (isLoading) {
@@ -26,18 +26,15 @@ function Home() {
 
    return (
       <div className="max-w-4xl mx-auto">
-         <h1 className="text-4xl font-bold text-center mb-8">最新文章</h1>
-         {posts && posts.length > 0 ? (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-               {posts.map((post) => (
-                  <PostCard key={post.id} post={post} truncatedContent={truncatedContent(post.content)} />
-               ))}
-            </div>
-         ) : (
-            <div className="text-center">
-               <p className="text-gray-600">目前沒有文章</p>
-            </div>
-         )}
+         <h1 className="text-4xl font-bold text-center mb-8">
+            最新文章
+         </h1>         
+         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => (
+               <PostCard key={post.id} post={post} truncatedContent={truncatedContent(post.content)} />
+            ))}
+         </div>
+         
       </div>
    )
 }

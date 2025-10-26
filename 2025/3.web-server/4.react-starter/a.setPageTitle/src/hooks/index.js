@@ -5,6 +5,8 @@ export function usePosts() {
   return useQuery({
     queryKey: ['posts'],
     queryFn: fetchPosts,
+    retry: 2,
+    retryDelay: 1000,
   })
 }
 
@@ -13,5 +15,7 @@ export function usePost(slug) {
     queryKey: ['post', slug],
     queryFn: () => fetchPost({ slug }),
     enabled: !!slug, // 只有當 slug 存在時才執行查詢
+    retry: 2,
+    retryDelay: 1000,
   })
 }
