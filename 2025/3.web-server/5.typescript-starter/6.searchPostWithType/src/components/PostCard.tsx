@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { Post } from '../types'
 
-interface PostCardProps {
+type PostCardProps = {
   post: Post
   truncatedContent: string
 }

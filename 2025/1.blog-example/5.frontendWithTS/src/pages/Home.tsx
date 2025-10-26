@@ -3,7 +3,7 @@ import { fetchPosts } from '../api'
 import { Link } from 'react-router-dom'
 import type { Post } from '../types'
 
-interface CardProps {
+type CardProps = {
   post: Post;
 }
 

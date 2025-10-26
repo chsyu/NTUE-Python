@@ -1,6 +1,6 @@
 // 根據後台 Pydantic Post 模型定義的 TypeScript 型別
 
-export interface Post {
+export type Post = {
   id: number;
   slug: string;
   title: string;
@@ -13,12 +13,12 @@ export type PostList = Post[];
 export type PostResponse = Post;
 
 // API 錯誤型別
-export interface ApiError {
+export type ApiError = {
   message: string;
   detail?: string;
 }
 
 // API 函數參數型別
-export interface FetchPostParams {
+export type FetchPostParams = {
   slug: string;
 }
