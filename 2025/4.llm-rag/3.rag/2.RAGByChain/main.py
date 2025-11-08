@@ -1,4 +1,8 @@
 # main.py
+"""
+LangChain RAG 教學範例
+使用 Chroma 向量資料庫 + Ollama LLM 實現檢索增強生成
+"""
 from pathlib import Path
 from typing import List, Optional
 
@@ -6,7 +10,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import uvicorn
 
-from texts import texts  # 你的教材語料（List[str]）
+from texts import texts
 
 from langchain_ollama import OllamaEmbeddings, ChatOllama
 from langchain_chroma import Chroma
@@ -14,96 +18,104 @@ from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
 
 # =====================
-# 基本設定
+# 配置設定
 # =====================
 BASE_DIR = Path(__file__).resolve().parent
-PERSIST_DIR = BASE_DIR / "chroma_store"   # Chroma 0.4+ 自動持久化
+PERSIST_DIR = BASE_DIR / "chroma_store"
 EMBED_MODEL = "nomic-embed-text"
-LLM_MODEL   = "qwen2.5:7b-instruct"
+LLM_MODEL = "qwen2.5:7b-instruct"
 DEFAULT_SYSTEM_PROMPT = (
     "你是精煉且忠實的助教，禁止臆測。嚴禁生成不符合事實的內容。"
     "若無法從提供的內容得到答案，請直說不知道。"
 )
 
 # =====================
-# 建立 / 載入向量庫
+# 向量庫初始化
 # =====================
-def build_or_load_vectorstore(embeddings: OllamaEmbeddings, seed_texts: List[str]) -> Chroma:
+def init_vectorstore(embeddings: OllamaEmbeddings, seed_texts: List[str]) -> Chroma:
+    """初始化或載入向量資料庫"""
     if PERSIST_DIR.exists():
-        print("偵測到既有向量庫，從磁碟載入…")
+        print("✓ 載入既有向量庫")
         return Chroma(
             persist_directory=str(PERSIST_DIR),
             embedding_function=embeddings,
         )
-    print("未偵測到向量庫，建立新索引（Chroma 會自動持久化）…")
+    print("✓ 建立新向量庫")
     return Chroma.from_texts(
         texts=seed_texts,
         embedding=embeddings,
         persist_directory=str(PERSIST_DIR),
     )
 
-# 初始化：Embeddings / VectorStore / Retriever
+# 初始化組件
 embeddings = OllamaEmbeddings(model=EMBED_MODEL)
-vs = build_or_load_vectorstore(embeddings, texts)
+vectorstore = init_vectorstore(embeddings, texts)
 
-# 用 MMR 的 Retriever（更穩定）
-retriever = vs.as_retriever(
+# 配置檢索器（使用 MMR 多樣性檢索）
+retriever = vectorstore.as_retriever(
     search_type="mmr",
     search_kwargs={"k": 4, "fetch_k": 20, "lambda_mult": 0.2},
 )
 
+# =====================
+# RAG Chain 構建
+# =====================
 def format_docs(docs) -> str:
-    return "\n".join(f"[{i+1}] {d.page_content}" for i, d in enumerate(docs))
+    """格式化檢索到的文件"""
+    return "\n".join(f"[{i+1}] {doc.page_content}" for i, doc in enumerate(docs))
 
-# =====================
-# Chain：檢索 → Prompt → LLM
-# =====================
+# 檢索步驟：將問題轉換為相關文件
 retriever_chain = RunnablePassthrough.assign(
     context=lambda x: format_docs(retriever.get_relevant_documents(x["question"]))
 )
 
+# 提示詞模板
 prompt = ChatPromptTemplate.from_messages([
     ("system", "{system}"),
-    ("user",
-     "你將根據以下提供的內容回答問題。若內容不足以回答，請說你不知道。\n\n"
-     "【內容】\n{context}\n\n"
-     "【問題】\n{question}")
+    ("user", "根據以下內容回答問題。若內容不足以回答，請說不知道。\n\n"
+             "【內容】\n{context}\n\n"
+             "【問題】\n{question}")
 ])
 
+# LLM
 llm = ChatOllama(model=LLM_MODEL, temperature=0.2)
 
-rag_chain = retriever_chain | prompt | llm  # ⭐ 完整 RAG chain
+# 完整的 RAG Chain：檢索 → 提示詞 → LLM
+rag_chain = retriever_chain | prompt | llm
 
 # =====================
-# FastAPI
+# FastAPI 應用
 # =====================
+app = FastAPI(title="RAG (Chroma + Ollama)")
+
 class ChatRequest(BaseModel):
+    """聊天請求模型"""
     model: str = LLM_MODEL
     system: Optional[str] = DEFAULT_SYSTEM_PROMPT
     user: str
 
-app = FastAPI(title="RAG (Chroma + Ollama)")
-
 @app.post("/chat")
 def chat(req: ChatRequest):
-    # 合併 system 提示
-    sys_merged = (
+    """處理聊天請求"""
+    # 合併系統提示詞
+    system_prompt = (
         DEFAULT_SYSTEM_PROMPT
         if req.system == DEFAULT_SYSTEM_PROMPT
         else f"{DEFAULT_SYSTEM_PROMPT}\n\n[用戶補充]\n{req.system or ''}"
     )
-
-    # 執行完整 RAG 鏈
-    result = rag_chain.invoke({"system": sys_merged, "question": req.user})
-    answer = result.content
-
-    # 回傳來源：再次以同樣 retriever 取片段（清楚直觀）
-    retrieved = retriever.get_relevant_documents(req.user)
-    sources = [d.page_content for d in retrieved]
-
+    
+    # 執行 RAG Chain
+    result = rag_chain.invoke({
+        "system": system_prompt,
+        "question": req.user
+    })
+    
+    # 獲取檢索來源（用於顯示）
+    sources = retriever.get_relevant_documents(req.user)
+    
     return {
-        "answer": answer,
-        "sources": sources,
+        "answer": result.content,
+        "sources": [doc.page_content for doc in sources],
         "k": 4,
         "mmr": {"fetch_k": 20, "lambda_mult": 0.2},
         "model": req.model,
@@ -112,6 +124,7 @@ def chat(req: ChatRequest):
 
 @app.get("/health")
 def health():
+    """健康檢查"""
     return {"status": "ok"}
 
 if __name__ == "__main__":

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Firebase Auth Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./env.js"></script>
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body class="min-h-screen bg-slate-900 text-slate-100">
+    <div class="max-w-4xl mx-auto py-16 px-6">
+      <h1 class="text-3xl font-bold mb-8">Firebase Auth + FastAPI Demo</h1>
+
+      <section class="mb-12 grid gap-10 md:grid-cols-2">
+        <div class="space-y-6 bg-slate-800/70 border border-slate-700 rounded-xl p-6">
+          <h2 class="text-xl font-semibold">註冊</h2>
+          <label class="block text-sm">Email
+            <input id="register-email" type="email" class="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 focus:outline-none focus:ring focus:ring-sky-500" placeholder="user@example.com" />
+          </label>
+          <label class="block text-sm">Password
+            <input id="register-password" type="password" class="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 focus:outline-none focus:ring focus:ring-sky-500" placeholder="••••••••" />
+          </label>
+          <label class="block text-sm">Display Name (可選)
+            <input id="register-display-name" type="text" class="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 focus:outline-none focus:ring focus:ring-sky-500" placeholder="Chester" />
+          </label>
+          <button id="register-btn" class="w-full rounded-md bg-sky-500 hover:bg-sky-400 px-4 py-2 font-medium text-slate-900">註冊</button>
+        </div>
+
+        <div class="space-y-6 bg-slate-800/70 border border-slate-700 rounded-xl p-6">
+          <h2 class="text-xl font-semibold">登入</h2>
+          <label class="block text-sm">Email
+            <input id="login-email" type="email" class="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 focus:outline-none focus:ring focus:ring-sky-500" placeholder="user@example.com" />
+          </label>
+          <label class="block text-sm">Password
+            <input id="login-password" type="password" class="mt-1 w-full rounded-md bg-slate-900 border border-slate-700 px-3 py-2 focus:outline-none focus:ring focus:ring-sky-500" placeholder="••••••••" />
+          </label>
+          <button id="login-btn" class="w-full rounded-md bg-emerald-500 hover:bg-emerald-400 px-4 py-2 font-medium text-slate-900">登入</button>
+          <button id="logout-btn" class="w-full rounded-md border border-slate-600 px-4 py-2 font-medium text-slate-100 hover:bg-slate-700">登出</button>
+        </div>
+      </section>
+
+      <section class="mb-12 bg-slate-800/70 border border-slate-700 rounded-xl p-6 space-y-4">
+        <h2 class="text-xl font-semibold">文章 API 測試</h2>
+        <div class="flex flex-col md:flex-row gap-3">
+          <button id="load-posts" class="rounded-md bg-slate-700 hover:bg-slate-600 px-4 py-2 text-sm">取得全部文章</button>
+          <div class="flex gap-2 items-center text-sm">
+            <span>取得單篇文章：</span>
+            <input id="post-slug" type="text" class="rounded-md bg-slate-900 border border-slate-700 px-3 py-1 focus:outline-none focus:ring focus:ring-sky-500" placeholder="例如 introduction-to-python" />
+            <button id="load-post" class="rounded-md bg-indigo-500 hover:bg-indigo-400 px-3 py-2 text-sm font-medium text-slate-900">取得</button>
+          </div>
+        </div>
+        <pre id="posts-output" class="bg-slate-900 border border-slate-700 rounded-md p-4 text-sm overflow-auto">尚未載入</pre>
+      </section>
+
+      <div id="status" class="mt-8 text-sm"></div>
+    </div>
+  </body>
+</html>
