@@ -71,18 +71,4 @@ export async function fetchPostBySlug(slug, { baseUrl = API_BASE_URL, authToken 
   return response.data;
 }
 
-export function onAuthStateChange(callback) {
-  return onAuthStateChanged(auth, callback);
-}
-
-window.firebaseAuthClient = {
-  auth,
-  registerWithEmail,
-  loginWithEmail,
-  logout,
-  fetchPosts,
-  fetchPostBySlug,
-  onAuthStateChange,
-};
-
-console.info("firebase.js 已載入，請使用 window.firebaseAuthClient.* 進行操作");
+export { onAuthStateChanged };

@@ -4,7 +4,7 @@ import {
   logout,
   fetchPosts,
   fetchPostBySlug,
-  onAuthStateChange,
+  onAuthStateChanged,
   auth,
 } from "./firebase.js";
 
@@ -98,7 +98,7 @@ document.getElementById("logout-btn").addEventListener("click", handleLogout);
 document.getElementById("load-posts").addEventListener("click", loadPosts);
 document.getElementById("load-post").addEventListener("click", loadPostBySlug);
 
-onAuthStateChange(async (user) => {
+onAuthStateChanged(async (user) => {
   if (user) {
     setStatus(`已登入：${user.email}`, "success");
     await loadPosts();
