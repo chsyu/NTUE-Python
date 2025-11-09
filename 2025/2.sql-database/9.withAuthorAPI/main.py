@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
 
-from db.init_data import create_tables, init_database
+from db.init_data import create_tables, init_database, save_tables
 from routers.posts import router as posts_router
 from routers.authors import router as authors_router
 from config.logging_config import setup_rotating_logging, get_logger
@@ -19,6 +19,8 @@ async def lifespan(app: FastAPI):
         create_tables()
         init_database()
         logger.info("✅ 應用程式啟動完成")
+        save_tables()
+        logger.info("✅ 資料庫表格保存完成")
         
     except Exception as e:
         logger.error(f"❌ 應用程式初始化失敗: {e}")

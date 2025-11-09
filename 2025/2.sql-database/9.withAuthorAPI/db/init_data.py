@@ -1,6 +1,7 @@
 """資料庫初始化模組 - 支援 Author, Post, Comment 三表關聯（批次匯入）"""
 from sqlalchemy.orm import Session
 from sqlalchemy import select, func
+from sqlalchemy.schema import CreateTable
 
 from .engine import engine
 from models import Author, Post, Comment
@@ -117,3 +118,12 @@ def create_tables():
             logger.warning("Vercel 環境：忽略表格建立錯誤，繼續啟動")
         else:
             raise
+        
+        
+def save_tables():
+    from models.base import Base
+
+    with open("schema.sql", "w") as f:
+        for table in Base.metadata.sorted_tables:
+            ddl = str(CreateTable(table).compile(dialect=engine.dialect))
+            f.write(ddl + ";\n\n")
