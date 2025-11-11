@@ -38,13 +38,17 @@ def build_or_load_vectorstore(seed_texts: List[str]) -> SupabaseVectorStore:
     return vs
 
 def interactive_loop(vs: SupabaseVectorStore) -> None:
+    retriever = vs.as_retriever(
+        search_type="mmr",
+        search_kwargs={"k": 3, "fetch_k": 10, "lambda_mult": 0.3},
+    )
     print("\n輸入你的問題（輸入 'exit' 或 'quit' 可結束）：")
     while True:
         query = input("\n請輸入查詢：").strip()
         if query.lower() in ("exit", "quit"):
             print("結束程式。")
             break
-        docs = vs.similarity_search(query, k=3)
+        docs = retriever.invoke(query)
         print("\nTop-3 相似結果：")
         for i, d in enumerate(docs, 1):
             print(f"{i}. {d.page_content} | meta={d.metadata}")

@@ -13,7 +13,7 @@ MODEL_NAME = "nomic-embed-text"
 def build_or_load_vectorstore(embeddings: OllamaEmbeddings, seed_texts: List[str]) -> Chroma:
     """
     若已有持久化：載入向量庫
-    否則：用 seed_texts 建立向量庫（Chroma 0.4.x 之後會自動持久化）
+    否則：用 seed_texts 建立向量庫
     回傳：vs
     """
     if PERSIST_DIR.exists():
@@ -30,11 +30,10 @@ def build_or_load_vectorstore(embeddings: OllamaEmbeddings, seed_texts: List[str
         embedding=embeddings,
         persist_directory=str(PERSIST_DIR),
     )
-    # 不需要 vs.persist()：Chroma 0.4.x 起自動持久化
     print(f"已建立向量庫並保存到 {PERSIST_DIR.name}")
     return vs
 
-def interactive_loop(vs: Chroma) -> None:
+def interactive_loop(retriever) -> None:
     print("\n輸入你的問題（輸入 'exit' 或 'quit' 可結束）：")
     while True:
         query = input("\n請輸入查詢：").strip()
@@ -42,11 +41,15 @@ def interactive_loop(vs: Chroma) -> None:
             print("結束程式。")
             break
 
-        docs = vs.similarity_search(query, k=3)
+        docs = retriever.invoke(query)
         print("\nTop-3 相似結果：")
         for i, d in enumerate(docs, 1):
             print(f"{i}. {d.page_content}")
 
 embeddings = OllamaEmbeddings(model=MODEL_NAME)
 vs = build_or_load_vectorstore(embeddings, texts)
-interactive_loop(vs)
+retriever = vs.as_retriever(
+    search_type="mmr",
+    search_kwargs={"k": 3, "fetch_k": 10, "lambda_mult": 0.3},
+)
+interactive_loop(retriever)

@@ -66,7 +66,7 @@ def format_docs(docs) -> str:
 
 # 檢索步驟：將問題轉換為相關文件
 retriever_chain = RunnablePassthrough.assign(
-    context=lambda x: format_docs(retriever.get_relevant_documents(x["question"]))
+    context=lambda x: format_docs(retriever.invoke(x["question"]))
 )
 
 # 提示詞模板
@@ -111,7 +111,7 @@ def chat(req: ChatRequest):
     })
     
     # 獲取檢索來源（用於顯示）
-    sources = retriever.get_relevant_documents(req.user)
+    sources = retriever.invoke(req.user)
     
     return {
         "answer": result.content,

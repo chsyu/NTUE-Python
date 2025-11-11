@@ -1,16 +1,21 @@
-import json
+from dotenv import load_dotenv
 from texts import texts
-from langchain_ollama import OllamaEmbeddings
+from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
 
+# 讀取 .env
+load_dotenv()
+
 # === 設定 ===
-MODEL_NAME = "nomic-embed-text"
+EMBED_MODEL = "text-embedding-3-small"  # 或 "text-embedding-3-large"
 
 # === 建立向量庫 ===
-embeddings = OllamaEmbeddings(model=MODEL_NAME)
+embeddings = OpenAIEmbeddings(model=EMBED_MODEL)  # 會自動讀取 OPENAI_API_KEY
 vs = Chroma.from_texts(texts=texts, embedding=embeddings)
-retriever = vs.as_retriever(search_kwargs={"k": 3})
-
+retriever = vs.as_retriever(
+    search_type="mmr",
+    search_kwargs={"k": 3, "fetch_k": 10, "lambda_mult": 0.3},
+)
 print("向量庫已建立。")
 
 # === 重複詢問使用者輸入 ===
@@ -23,7 +28,6 @@ while True:
         break
 
     docs = retriever.invoke(query)
-    # docs = vs.similarity_search_with_score(query, k=3)
     print("\nTop-3 相似結果：")
     for i, d in enumerate(docs, 1):
         print(f"{i}. {d.page_content}")

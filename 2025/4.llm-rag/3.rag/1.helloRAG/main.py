@@ -78,7 +78,7 @@ def chat(req: ChatRequest):
     )
 
     # 步驟 1：檢索相關文件（RAG 的 Retrieval）
-    retrieved = retriever.get_relevant_documents(req.user)
+    retrieved = retriever.invoke(req.user)
     context = format_docs(retrieved)
 
     # 步驟 2：建立提示詞模板

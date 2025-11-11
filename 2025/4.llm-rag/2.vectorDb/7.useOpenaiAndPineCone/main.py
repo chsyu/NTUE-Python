@@ -4,6 +4,7 @@ import os, time
 from typing import Dict, Any, List
 from texts import texts
 from langchain_openai import OpenAIEmbeddings
+from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone, ServerlessSpec
 
 load_dotenv()
@@ -31,41 +32,50 @@ def ensure_index(name: str, dim: int):
             spec=ServerlessSpec(cloud="aws", region="us-east-1"),
         )
 
-def upsert_if_needed(index_name: str, ns: str, docs: List[str]):
+def build_or_load_vectorstore(index_name: str, ns: str, docs: List[str]) -> PineconeVectorStore:
+    ensure_index(index_name, DIMENSION)
+    vectorstore = PineconeVectorStore(
+        index_name=index_name,
+        namespace=ns,
+        embedding=emb,
+        pinecone_api_key=PINECONE_API_KEY,
+    )
     index = pc.Index(index_name)
 
     stats: Dict[str, Any] = index.describe_index_stats()
     count = stats.get("namespaces", {}).get(ns, {}).get("vector_count", 0)
 
-    if count > 0:
-        print(f"namespace={ns} 已有 {count} 筆，跳過嵌入與上傳。")
-        return
+    if count == 0 and docs:
+        print(f"namespace={ns} 目前沒有資料，開始上傳 …")
+        vectorstore.add_texts(
+            texts=docs,
+            metadatas=[{"source": f"doc-{i+1}"} for i in range(len(docs))],
+        )
+        print("已完成嵌入與上傳。")
+    else:
+        print(f"namespace={ns} 已有 {count} 筆，使用既有資料。")
+    return vectorstore
 
-    print(f"namespace={ns} 目前沒有資料，開始上傳 …")
-    print(f"開始嵌入 {len(docs)} 筆文本 …")
-    vectors = emb.embed_documents(docs)  # 這裡才會呼叫 OpenAI API
-    payload = [(f"doc-{i+1}", v, {"text": t}) for i, (t, v) in enumerate(zip(docs, vectors))]
-    index.upsert(vectors=payload, namespace=ns)
-    print("上傳完成。")
-
-def query_loop(index_name: str, ns: str):
-    index = pc.Index(index_name)
+def query_loop(retriever):
     print("\n輸入你的問題（輸入 'exit' 或 'quit' 可結束）：")
     while True:
         q = input("\n請輸入查詢：").strip()
         if q.lower() in ("exit", "quit"):
-            print("結束程式。"); break
-        qvec = emb.embed_query(q)  # 查詢向量（會呼叫 OpenAI，一次一筆）
-        res = index.query(vector=qvec, top_k=TOP_K, include_metadata=True, namespace=ns)
-        matches = res.get("matches", [])
-        if not matches:
-            print("沒有找到相似結果。"); continue
+            print("結束程式。")
+            break
+        docs = retriever.invoke(q)
+        if not docs:
+            print("沒有找到相似結果。")
+            continue
         print(f"\nTop-{TOP_K} 相似結果：")
-        for i, m in enumerate(matches, 1):
-            print(f"{i}. id={m['id']} score={m['score']:.4f} | {m['metadata'].get('text')}")
+        for i, doc in enumerate(docs, 1):
+            print(f"{i}. {doc.page_content}")
 
 
-ensure_index(INDEX_NAME, DIMENSION)
-upsert_if_needed(INDEX_NAME, NAMESPACE, texts)
+vectorstore = build_or_load_vectorstore(INDEX_NAME, NAMESPACE, texts)
+retriever = vectorstore.as_retriever(
+    search_type="mmr",
+    search_kwargs={"k": TOP_K, "fetch_k": 10, "lambda_mult": 0.3},
+)
 print("向量索引已就緒。")
-query_loop(INDEX_NAME, NAMESPACE)
+query_loop(retriever)
