@@ -90,13 +90,9 @@ def chat(req: ChatRequest):
          "【問題】\n{question}")
     ])
 
-    # 步驟 3：建立 LLM（每次請求可用不同模型）
+    # 步驟 3：建立 LLM / Chain, 執行 Chain 生成回答
     llm = ChatOllama(model=req.model, temperature=0.2)
-
-    # 步驟 4：建立 Chain（prompt -> llm）
     chain = prompt | llm
-
-    # 步驟 5：執行 Chain 生成回答
     result = chain.invoke({
         "system": system_prompt,
         "context": context,
